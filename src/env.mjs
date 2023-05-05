@@ -7,7 +7,7 @@ export const env = createEnv({
     IMAGE_DOMAINS: z
       .string()
       .min(1)
-      .transform((s) => s.split(', ')),
+      .transform((s) => s.split(',')),
     ANALYZE: z
       .string()
       .refine((s) => s === 'true' || s === 'false')

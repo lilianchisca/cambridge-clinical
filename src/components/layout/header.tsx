@@ -43,12 +43,12 @@ const headerLinks = [
     sublinks: [],
   },
   {
-    href: '/resources/ucas-guide',
+    href: '/resources/ucas-guides',
     label: 'Resources',
     sublinks: [
       {
-        href: '/resources/ucas-guide',
-        label: 'UCAS Guide',
+        href: '/resources/ucas-guides',
+        label: 'UCAS Guides',
       },
       {
         href: '/resources/comparison-tools',
