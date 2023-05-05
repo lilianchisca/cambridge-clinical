@@ -1,0 +1,35 @@
+.CircularProgressbar {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.CircularProgressbar .CircularProgressbar-path {
+  stroke-linecap: round;
+  transition: stroke-dashoffset 2s ease 0s;
+}
+
+.CircularProgressbar .CircularProgressbar-trail {
+  stroke-linecap: round;
+}
+
+.CircularProgressbar .CircularProgressbar-text {
+  font-size: 52px;
+  dominant-baseline: middle;
+  text-anchor: middle;
+}
+
+.CircularProgressbar .CircularProgressbar-trail {
+  @apply stroke-green-2;
+}
+
+.CircularProgressbar .CircularProgressbar-path {
+  @apply stroke-secondary;
+}
+
+.CircularProgressbar .CircularProgressbar-text {
+  @apply fill-secondary font-heading;
+}
+
+.CircularProgressbar .CircularProgressbar-background {
+  @apply fill-green-2;
+}

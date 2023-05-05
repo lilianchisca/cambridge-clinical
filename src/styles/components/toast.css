@@ -1,0 +1,18 @@
+:root {
+  --toastify-color-progress-success: rgb(var(--primary));
+  --toastify-color-progress-warning: rgb(var(--warning));
+}
+
+.Toastify__progress-bar.Toastify__progress-bar--success {
+  @apply bg-primary/60;
+}
+
+.Toastify__progress-bar.Toastify__progress-bar--warning {
+  @apply bg-warning/60;
+}
+
+@screen md {
+  :root {
+    --toastify-toast-width: 420px;
+  }
+}

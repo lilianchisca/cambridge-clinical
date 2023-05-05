@@ -1,0 +1,22 @@
+{
+  "editor.tabSize": 2,
+  "prettier.ignorePath": ".gitignore",
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "css.validate": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "workbench.colorCustomizations": {
+    "terminal.background": "#273136",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#bd0c63",
+    "titleBar.inactiveBackground": "#8d094a99",
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "titleBar.activeBackground": "#8d094a",
+    "titleBar.activeForeground": "#e7e7e7"
+  },
+  "peacock.color": "#8d094a",
+  "dotenv.enableAutocloaking": false
+}

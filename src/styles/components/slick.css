@@ -1,0 +1,159 @@
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.dragging {
+    cursor: pointer;
+    cursor: hand;
+  }
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  transform: translate3d(0, 0, 0);
+}
+
+.slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  will-change: transform;
+
+  &::before,
+  &::after {
+    display: table;
+    content: '';
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+.slick-loading .slick-track {
+  visibility: hidden;
+}
+
+.slick-slide {
+  display: none;
+  float: left;
+  height: 100%;
+  min-height: 1px;
+}
+
+[dir='rtl'] .slick-slide {
+  float: right;
+}
+
+.slick-slide img {
+  display: block;
+}
+
+.slick-slide.slick-loading img {
+  display: none;
+}
+
+.slick-slide.dragging img {
+  pointer-events: none;
+}
+
+.slick-initialized .slick-slide {
+  display: block;
+}
+
+.slick-loading .slick-slide {
+  visibility: hidden;
+}
+
+.slick-vertical .slick-slide {
+  display: block;
+  height: auto;
+  border: 1px solid transparent;
+}
+
+.slick-arrow.slick-hidden {
+  display: none;
+}
+
+.slick-dots {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none !important;
+
+  li {
+    padding-right: 5px;
+    padding-left: 5px;
+
+    button {
+      transition: all 0.3s;
+      outline: none;
+    }
+
+    &.slick-active {
+      button {
+        position: relative;
+      }
+    }
+  }
+}
+
+.c-slick-slider {
+  .slick-list {
+    overflow: visible;
+  }
+
+  .slick-slide {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .slick-dots {
+    position: absolute;
+    bottom: -50px;
+    right: 0;
+    padding-right: 20px;
+    padding-left: 20px;
+    left: 0;
+
+    li {
+      padding-left: 6px;
+      padding-right: 6px;
+
+      button {
+        width: 16px;
+        height: 16px;
+        transition: all 0.3s;
+        font-size: 0;
+        color: transparent;
+        border-radius: 16px;
+      }
+
+      &.slick-active {
+        button {
+          width: 40px;
+        }
+      }
+    }
+  }
+}
