@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     token,
   }
 
-  if (!token || token !== 'mdportal.mydevenv.co') {
+  if (!token || token !== 'lopata30') {
     return NextResponse.json({ revalidated, message: 'Invalid token' }, { status: 401 })
   }
   if ((!path || path.length === 0) && (!tag || tag.length === 0)) {
