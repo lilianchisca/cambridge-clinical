@@ -1,10 +1,9 @@
 'use client'
 
 import { Provider as TooltipProvider } from '@radix-ui/react-tooltip'
+import { PropsWithChildren } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Provider as BalancerProvider } from 'react-wrap-balancer'
-
-import { PropsWithChildren } from '@/types/common'
 
 export default function Providers({ children }: PropsWithChildren) {
   return (

@@ -1,8 +1,7 @@
 import { Inter as InterFont } from 'next/font/google'
+import { PropsWithChildren } from 'react'
 
 import '@/styles/tailwind.css'
-
-import { PropsWithChildren } from '@/types/common'
 
 import Footer from '@/components/layout/footer'
 import Header from '@/components/layout/header'
