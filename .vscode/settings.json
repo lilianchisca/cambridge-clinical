@@ -2,14 +2,16 @@
   "editor.tabSize": 2,
   "prettier.ignorePath": ".gitignore",
   "editor.formatOnSave": false,
+  "editor.formatOnType": true,
+  "editor.formatOnPaste": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": false,
+    "source.formatDocument": true
   },
   "css.validate": false,
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "workbench.colorCustomizations": {
-    "terminal.background": "#273136",
     "commandCenter.border": "#e7e7e799",
     "sash.hoverBorder": "#bd0c63",
     "titleBar.inactiveBackground": "#8d094a99",

@@ -36,8 +36,9 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts"
-, "app/ucat"  ],
+    ".next/types/**/*.ts",
+    "app/ucat"
+  ],
   "exclude": ["node_modules", "src/types/wordpress.d.ts", "src/types/wordpress.ts"],
   "moduleResolution": ["node_modules", ".next", "node"]
 }
