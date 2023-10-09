@@ -1,12 +1,10 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
 
-import { env } from './src/env.mjs'
-
 const plugins = []
 
 plugins.push(
   bundleAnalyzer({
-    enabled: env.ANALYZE,
+    enabled: process.env.ANALYZE === 'true',
   })
 )
 
