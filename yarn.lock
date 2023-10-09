@@ -3790,6 +3790,16 @@ cz-conventional-changelog@3.3.0:
   optionalDependencies:
     "@commitlint/load" ">6.1.1"
 
+cz-git@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/cz-git/-/cz-git-1.7.1.tgz#12122ea27322765d1b8038efdc1dc5b15cb49050"
+  integrity sha512-NMe4REukCS7op1YA1jixRXOgII8Um2/Ii8TeyFEOISgp2ZzeobzkMOP8dXSrTQ3bvmm7YpPOdr2301yJkOJcbA==
+
+czg@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/czg/-/czg-1.7.1.tgz#572e8d9596737a6d05f017f1af0953a6b24fb210"
+  integrity sha512-KP93cTbZxgWYDKJzZpjnLe0sy/2FwyegatnrOaqsath04WinvsdhZl5QCGkxTKBY2DavpKloIBW/WGZzCKmrlA==
+
 damerau-levenshtein@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz#b43d286ccbd36bc5b2f7ed41caf2d0aba1f8a6e7"
