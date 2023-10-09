@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { DndProvider, DragPreviewImage, useDrag, useDrop } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { cn } from '@/helpers/cn'
 import { getRgbChannels } from '@/helpers/hex-rgb'
+import { DndProvider, DragPreviewImage, useDrag, useDrop } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
 
@@ -81,7 +81,7 @@ function Drop({
   }, [ref, isActive, canDrop])
 
   return (
-    <div ref={drop} className='relative h-34 w-auto'>
+    <div ref={drop} className="relative h-34 w-auto">
       <div
         ref={ref}
         className={cn(
@@ -89,11 +89,11 @@ function Drop({
           (isActive || canDrop) && 'ring-2',
           lastDroppedItem ? 'bg-[#ecd9e4]' : 'bg-[#f5f6f7]'
         )}
-        aria-hidden='true'
+        aria-hidden="true"
       />
       {answer ? (
-        <div className='relative flex items-center px-15 text-13 leading-[32px]'>
-          <div className='mr-10 font-bold'>{letters[index]}.</div>
+        <div className="relative flex items-center px-15 text-13 leading-[32px]">
+          <div className="mr-10 font-bold">{letters[index]}.</div>
           <div dangerouslySetInnerHTML={{ __html: answer }}></div>
         </div>
       ) : null}
@@ -152,24 +152,24 @@ function Drag({
     <>
       <DragPreviewImage
         connect={preview}
-        src='data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%3E%3Ccircle%20cx%3D%225%22%20cy%3D%225%22%20r%3D%225%22%20fill%3D%22%238d094a%22%20%2F%3E%3C%2Fsvg%3E'
+        src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%3E%3Ccircle%20cx%3D%225%22%20cy%3D%225%22%20r%3D%225%22%20fill%3D%22%238d094a%22%20%2F%3E%3C%2Fsvg%3E"
       />
       {coords || (lineCoords.endX > 0 && lineCoords.endY > 0) ? (
-        <svg className='pointer-events-none fixed inset-0 z-10 h-full w-full opacity-60'>
+        <svg className="pointer-events-none fixed inset-0 z-10 h-full w-full opacity-60">
           <line
             x1={lineCoords.endX === 0 && isDragging ? 0 : lineCoords.startX}
             y1={lineCoords.endY === 0 && isDragging ? 0 : lineCoords.startY}
             x2={coords && !isDragging ? coords.endX : lineCoords.endX}
             y2={coords && !isDragging ? coords.endY : lineCoords.endY}
-            stroke='#cb4080'
-            strokeWidth='2'
-            strokeLinecap='round'
+            stroke="#cb4080"
+            strokeWidth="2"
+            strokeLinecap="round"
           />
         </svg>
       ) : null}
-      <div ref={drag} className='relative' onDrag={handleDrag}>
+      <div ref={drag} className="relative" onDrag={handleDrag}>
         <div
-          className='cursor-pointer rounded-5 border border-[#f5f6f7] bg-[#f5f6f7] px-20 py-14 text-13 ring-gray-400 transition-all hover:ring-2'
+          className="cursor-pointer rounded-5 border border-[#f5f6f7] bg-[#f5f6f7] px-20 py-14 text-13 ring-gray-400 transition-all hover:ring-2"
           dangerouslySetInnerHTML={{ __html: answer }}
         ></div>
       </div>
@@ -243,12 +243,12 @@ export function TestQuestionMatching({ question }: TestQuestionMatchingProps) {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className='relative'>
-        <div className='-mx-40 flex flex-wrap'>
-          <div className='w-1/2 px-40'>
-            <div className='max-w-[440px]'>
+      <div className="relative">
+        <div className="-mx-40 flex flex-wrap">
+          <div className="w-1/2 px-40">
+            <div className="max-w-[440px]">
               {boxes.map((box, index) => (
-                <div className='mb-10 w-full' key={index}>
+                <div className="mb-10 w-full" key={index}>
                   <Drag
                     type={box.type}
                     answer={box.answer}
@@ -259,10 +259,10 @@ export function TestQuestionMatching({ question }: TestQuestionMatchingProps) {
               ))}
             </div>
           </div>
-          <div className='w-1/2 px-40'>
+          <div className="w-1/2 px-40">
             {dustbins.map((dustbin, index) => (
-              <div className='mb-12' key={index}>
-                <div className='flex items-center'>
+              <div className="mb-12" key={index}>
+                <div className="flex items-center">
                   <Drop
                     accept={leftSide}
                     onDrop={(item, coords) => handleDrop(index, item, coords)}

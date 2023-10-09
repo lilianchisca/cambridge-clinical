@@ -1,5 +1,5 @@
-import { Inter as InterFont } from 'next/font/google'
 import { PropsWithChildren } from 'react'
+import { Inter as InterFont } from 'next/font/google'
 
 import '@/styles/tailwind.css'
 
@@ -12,9 +12,9 @@ const bodyFont = InterFont({
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang='en' className={`scroll-smooth bg-gray-100 antialiased ${bodyFont.variable}`}>
+    <html lang="en" className={`scroll-smooth bg-gray-100 antialiased ${bodyFont.variable}`}>
       <head />
-      <body className='min-h-screen font-body font-normal leading-normal'>
+      <body className="min-h-screen font-body font-normal leading-normal">
         <Providers>{children}</Providers>
       </body>
     </html>

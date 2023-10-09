@@ -5,6 +5,7 @@ README.md
 
 # dependencies
 /node_modules
+node_modules
 /.pnp
 .pnp.js
 
@@ -44,6 +45,12 @@ yarn.lock
 public
 
 .all-contributorsrc
+
+pnpm-lock.yaml
+.vscode
+.git
+.husky
+.swc
 
 src/types/wordpress.d.ts
 src/types/wordpress.ts

@@ -15,10 +15,10 @@ export default function IntroBlock({ title, content, topPadding, bottomPadding }
         bottomPadding
       )}`}
     >
-      <div className='c-container'>
-        <h2 className='h2 text-secondary-400' dangerouslySetInnerHTML={{ __html: title }}></h2>
+      <div className="c-container">
+        <h2 className="h2 text-secondary-400" dangerouslySetInnerHTML={{ __html: title }}></h2>
         <div
-          className='prose mt-25 max-w-full lg:prose-lg xl:prose-xl lg:mt-35'
+          className="prose mt-25 max-w-full lg:prose-lg xl:prose-xl lg:mt-35"
           dangerouslySetInnerHTML={{ __html: content }}
         ></div>
       </div>

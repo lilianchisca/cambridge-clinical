@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const { register } = require('@swc-node/register/register')
-// eslint-disable-next-line import/no-extraneous-dependencies
 const { readDefaultTsConfig } = require('@swc-node/register/read-default-tsconfig')
 const path = require('path')
 

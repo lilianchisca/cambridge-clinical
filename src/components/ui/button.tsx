@@ -1,8 +1,8 @@
-import { ArrowRight } from 'lucide-react'
-import Link, { LinkProps } from 'next/link'
 import { ComponentPropsWithRef, forwardRef, ReactNode } from 'react'
+import Link, { LinkProps } from 'next/link'
 
 import { cn } from '@/helpers/cn'
+import { ArrowRight } from 'lucide-react'
 
 export type ButtonProps = {
   href: string
@@ -23,13 +23,13 @@ const Button = forwardRef<HTMLAnchorElement, ButtonProps>(
       openNewTab !== undefined ? openNewTab : href && !href.startsWith('/') && !href.startsWith('#')
 
     const Arrow = () => (
-      <span className='absolute right-7 top-1/2 z-10 h-38 w-38 -translate-y-1/2 overflow-hidden rounded-full bg-white text-primary-600 md:h-40 md:w-40 lg:h-42 lg:w-42 xl:h-44 xl:w-44'>
-        <span className='absolute inset-0 flex items-center justify-center transition-all group-hover:translate-x-full'>
+      <span className="absolute right-7 top-1/2 z-10 h-38 w-38 -translate-y-1/2 overflow-hidden rounded-full bg-white text-primary-600 md:h-40 md:w-40 lg:h-42 lg:w-42 xl:h-44 xl:w-44">
+        <span className="absolute inset-0 flex items-center justify-center transition-all group-hover:translate-x-full">
           <span>
             <ArrowRight size={20} />
           </span>
         </span>
-        <span className='absolute inset-0 flex -translate-x-full items-center justify-center transition-all group-hover:translate-x-0'>
+        <span className="absolute inset-0 flex -translate-x-full items-center justify-center transition-all group-hover:translate-x-0">
           <span>
             <ArrowRight size={20} />
           </span>
@@ -40,7 +40,7 @@ const Button = forwardRef<HTMLAnchorElement, ButtonProps>(
     if (!isNewTab) {
       return (
         <Link href={href} ref={ref} className={btnClasses} {...rest} {...buttonProps}>
-          <span className='relative z-10'>{children}</span>
+          <span className="relative z-10">{children}</span>
           <Arrow />
         </Link>
       )
@@ -49,17 +49,19 @@ const Button = forwardRef<HTMLAnchorElement, ButtonProps>(
     return (
       <a
         ref={ref}
-        target='_blank'
-        rel='noopener noreferrer'
+        target="_blank"
+        rel="noopener noreferrer"
         href={href}
         {...rest}
         className={btnClasses}
       >
-        <span className='relative z-10'>{children}</span>
+        <span className="relative z-10">{children}</span>
         <Arrow />
       </a>
     )
   }
 )
+
+Button.displayName = 'Button'
 
 export default Button

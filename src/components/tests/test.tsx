@@ -1,11 +1,11 @@
 'use client'
 
-import shuffle from 'lodash/shuffle'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { useIsClient } from 'usehooks-ts'
+import Image from 'next/image'
 
 import { cn } from '@/helpers/cn'
+import shuffle from 'lodash/shuffle'
+import { useIsClient } from 'usehooks-ts'
 
 import { GetTestByUriQuery, Question } from '@/types/wordpress'
 
@@ -101,7 +101,7 @@ export function Test({ test }: TestProps) {
   }
 
   return (
-    <div className='flex min-h-screen flex-col'>
+    <div className="flex min-h-screen flex-col">
       <TestHeader
         testTitle={testTitle}
         testCourse={testCourse}
@@ -118,24 +118,24 @@ export function Test({ test }: TestProps) {
         )}
       >
         {currentTab === 'start' ? (
-          <div className='w-full pb-50'>
-            <div className='c-container'>
-              <div className='relative pb-100 pt-60 2xl:pb-150 2xl:pt-85'>
-                <h2 className='text-26 font-bold leading-none text-secondary-400 md:text-32 lg:text-38 xl:text-42'>
+          <div className="w-full pb-50">
+            <div className="c-container">
+              <div className="relative pb-100 pt-60 2xl:pb-150 2xl:pt-85">
+                <h2 className="text-26 font-bold leading-none text-secondary-400 md:text-32 lg:text-38 xl:text-42">
                   Introduction Screen
                 </h2>
-                <div className='mt-36 max-w-[675px]'>
+                <div className="mt-36 max-w-[675px]">
                   <div
-                    className='prose max-w-full lg:prose-lg 2xl:prose-xl'
+                    className="prose max-w-full lg:prose-lg 2xl:prose-xl"
                     dangerouslySetInnerHTML={{ __html: testIntro }}
                   ></div>
                 </div>
 
-                <div className='absolute -bottom-30 -left-86 2xl:bottom-0'>
+                <div className="absolute -bottom-30 -left-86 2xl:bottom-0">
                   <Image
-                    src='/images/logo.png'
-                    alt='Cambridge Clinical'
-                    className='h-79 w-169 opacity-40 transition-all lg:h-93 lg:w-199 2xl:h-111 2xl:w-239'
+                    src="/images/logo.png"
+                    alt="Cambridge Clinical"
+                    className="h-79 w-169 opacity-40 transition-all lg:h-93 lg:w-199 2xl:h-111 2xl:w-239"
                     width={199}
                     height={93}
                   />
@@ -157,58 +157,58 @@ export function Test({ test }: TestProps) {
         )}
 
         {currentTab === 'review' ? (
-          <div className='w-full pb-50'>
-            <div className='c-container'>
-              <div className='relative pb-150 pt-85'>
-                <h2 className='text-26 font-bold leading-none text-secondary-400 md:text-32 lg:text-38 xl:text-42'>
+          <div className="w-full pb-50">
+            <div className="c-container">
+              <div className="relative pb-150 pt-85">
+                <h2 className="text-26 font-bold leading-none text-secondary-400 md:text-32 lg:text-38 xl:text-42">
                   Review Section
                 </h2>
-                <div className='mt-36 max-w-[775px]'>
-                  <div className='prose max-w-full lg:prose-lg xl:prose-xl'>
+                <div className="mt-36 max-w-[775px]">
+                  <div className="prose max-w-full lg:prose-lg xl:prose-xl">
                     <p>Your questions are summarised below.</p>
                     <p>Review them using one of the three buttons at the bottom of the screen:</p>
                   </div>
                 </div>
-                <div className='mt-40'>
+                <div className="mt-40">
                   <div
-                    className='bg-primary-400 px-15 text-20 uppercase leading-[44px] text-white lg:py-18 lg:pl-30'
+                    className="bg-primary-400 px-15 text-20 uppercase leading-[44px] text-white lg:py-18 lg:pl-30"
                     dangerouslySetInnerHTML={{ __html: test?.title ?? '' }}
                   ></div>
-                  <div className='shadow-sm'>
+                  <div className="shadow-sm">
                     {tabs.map((tab, index) =>
                       (reviewView === 'flagged' && tab.flagged) ||
                       (reviewView === 'incomplete' && !tab.answered && !tab.flagged) ||
                       reviewView === 'all' ? (
                         <div
                           key={tab.question}
-                          className='relative flex flex-wrap py-20 transition-all odd:bg-white even:bg-[#f4edf1] hover:z-1 hover:shadow-md'
+                          className="relative flex flex-wrap py-20 transition-all odd:bg-white even:bg-[#f4edf1] hover:z-1 hover:shadow-md"
                         >
-                          <div className='w-1/3 px-15 text-18 lg:pl-30 xl:text-20'>
+                          <div className="w-1/3 px-15 text-18 lg:pl-30 xl:text-20">
                             Question {index + 1}
                           </div>
-                          <div className='w-1/3 px-15 text-18 xl:text-20'>
-                            <div className='mx-auto flex w-185 items-center'>
+                          <div className="w-1/3 px-15 text-18 xl:text-20">
+                            <div className="mx-auto flex w-185 items-center">
                               {tab.flagged ? (
                                 <>
-                                  <div className='w-120'>Flagged</div>
-                                  <div className='h-13 w-13 rounded-full bg-[#e7e761]'></div>
+                                  <div className="w-120">Flagged</div>
+                                  <div className="h-13 w-13 rounded-full bg-[#e7e761]"></div>
                                 </>
                               ) : tab.answered ? (
                                 <>
-                                  <div className='w-120'>Complete</div>
-                                  <div className='h-13 w-13 rounded-full bg-[#84e761]'></div>
+                                  <div className="w-120">Complete</div>
+                                  <div className="h-13 w-13 rounded-full bg-[#84e761]"></div>
                                 </>
                               ) : (
                                 <>
-                                  <div className='w-120'>Incomplete</div>
-                                  <div className='h-13 w-13 rounded-full bg-[#e76161]'></div>
+                                  <div className="w-120">Incomplete</div>
+                                  <div className="h-13 w-13 rounded-full bg-[#e76161]"></div>
                                 </>
                               )}
                             </div>
                           </div>
-                          <div className='w-1/3 px-15 text-right text-18 lg:pr-30 xl:text-20'>
+                          <div className="w-1/3 px-15 text-right text-18 lg:pr-30 xl:text-20">
                             <button
-                              className='underline hover:no-underline'
+                              className="underline hover:no-underline"
                               onClick={() => currentTabSet(index)}
                             >
                               Review this question

@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import Balancer from 'react-wrap-balancer'
 
 import { getPaddings } from '@/helpers/get-paddings'
+import Balancer from 'react-wrap-balancer'
 
 type FeaturedBlockProps = {
   title: string
@@ -34,19 +34,19 @@ export default function FeaturedBlock({
         bottomPadding
       )}`}
     >
-      <div className='c-container'>
-        <div className='flex flex-wrap items-center'>
+      <div className="c-container">
+        <div className="flex flex-wrap items-center">
           <div
             className={`w-full md:w-1/2 md:self-stretch lg:w-[53%] ${
               imageAlignment === 'right' ? 'md:order-last' : ''
             }`}
           >
-            <div className='relative h-full min-h-220 overflow-hidden rounded-20 md:min-h-[420px]'>
+            <div className="relative h-full min-h-220 overflow-hidden rounded-20 md:min-h-[420px]">
               <Image
                 src={image.sourceUrl}
                 fill
                 alt={title}
-                className='absolute -inset-5 h-[calc(100%+10px)] w-[calc(100%+10px)] object-cover object-center'
+                className="absolute -inset-5 h-[calc(100%+10px)] w-[calc(100%+10px)] object-cover object-center"
               />
             </div>
           </div>
@@ -58,12 +58,12 @@ export default function FeaturedBlock({
             }`}
           >
             <Balancer
-              as='h2'
-              className='h2 text-secondary-400'
+              as="h2"
+              className="h2 text-secondary-400"
               dangerouslySetInnerHTML={{ __html: title }}
             />
             <div
-              className='prose mt-20 max-w-full lg:prose-lg xl:prose-xl prose-ul:list-none prose-ul:pl-0 prose-li:text-left prose-li:after:hidden lg:mt-30 xl:mt-40'
+              className="prose mt-20 max-w-full lg:prose-lg xl:prose-xl prose-ul:list-none prose-ul:pl-0 prose-li:text-left prose-li:after:hidden lg:mt-30 xl:mt-40"
               dangerouslySetInnerHTML={{ __html: contentWithCheckmarks }}
             ></div>
           </div>

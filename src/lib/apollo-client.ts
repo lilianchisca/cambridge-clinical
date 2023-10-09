@@ -1,6 +1,5 @@
-import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
-
 import { env } from '@/env.mjs'
+import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client'
 
 let client: ApolloClient<NormalizedCacheObject>
 

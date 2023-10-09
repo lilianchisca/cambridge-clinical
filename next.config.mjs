@@ -20,13 +20,16 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
+    deviceSizes: [640, 750, 1024, 1280, 1440, 1680, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 430],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31_536_000,
-    domains: env.IMAGE_DOMAINS,
-  },
-  experimental: {
-    appDir: true,
-    // typedRoutes: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
 }
 

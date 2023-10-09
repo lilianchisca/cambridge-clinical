@@ -7,8 +7,8 @@ export default function Page() {
   return (
     <>
       <PageIntro
-        title='Taking a Gap Year before Medical or Dental School'
-        pretitle='14 DECEMBER 2022'
+        title="Taking a Gap Year before Medical or Dental School"
+        pretitle="14 DECEMBER 2022"
         image={{ sourceUrl: '/images/content/about-header.jpg' }}
       />
       <Categories />

@@ -1,5 +1,5 @@
-import Link, { LinkProps } from 'next/link'
 import { ComponentPropsWithRef, forwardRef, ReactNode } from 'react'
+import Link, { LinkProps } from 'next/link'
 
 export type NextLinkProps = {
   href: string
@@ -25,8 +25,8 @@ const NextLink = forwardRef<HTMLAnchorElement, NextLinkProps>(
     return (
       <a
         ref={ref}
-        target='_blank'
-        rel='noopener noreferrer'
+        target="_blank"
+        rel="noopener noreferrer"
         href={href}
         {...rest}
         className={className}
@@ -36,5 +36,6 @@ const NextLink = forwardRef<HTMLAnchorElement, NextLinkProps>(
     )
   }
 )
+NextLink.displayName = 'NextLink'
 
 export default NextLink

@@ -1,7 +1,8 @@
 'use client'
 
-import { ArrowDown } from 'lucide-react'
 import { useState } from 'react'
+
+import { ArrowDown } from 'lucide-react'
 import AnimateHeight from 'react-animate-height'
 
 import { Page_Builder_Sections_Faqs } from '@/types/wordpress'
@@ -36,8 +37,8 @@ export default function Faqs({ section }: FaqsProps) {
   const [activeFaq, activeFaqSet] = useState<string>('')
 
   return (
-    <div className='relative overflow-hidden'>
-      <div className='c-container py-20 lg:py-30'>
+    <div className="relative overflow-hidden">
+      <div className="c-container py-20 lg:py-30">
         <Select options={courses} value={selectedCourse} onValueChange={selectedCourseSet} />
       </div>
       {faqs
@@ -53,7 +54,7 @@ export default function Faqs({ section }: FaqsProps) {
             }`}
             key={faq.question}
           >
-            <div className='c-container'>
+            <div className="c-container">
               <div
                 className={`flex w-full appearance-none items-center justify-between border-b py-20 lg:py-30 ${
                   activeFaq === faq.question
@@ -63,7 +64,7 @@ export default function Faqs({ section }: FaqsProps) {
               >
                 {faq?.question ? (
                   <div
-                    className='pr-20 text-16 font-bold text-secondary-400 md:text-18 lg:text-20 xl:text-22 2xl:text-25'
+                    className="pr-20 text-16 font-bold text-secondary-400 md:text-18 lg:text-20 xl:text-22 2xl:text-25"
                     dangerouslySetInnerHTML={{ __html: faq.question }}
                   ></div>
                 ) : null}
@@ -86,7 +87,7 @@ export default function Faqs({ section }: FaqsProps) {
               <AnimateHeight duration={300} height={activeFaq === faq.question ? 'auto' : 0}>
                 {faq?.answer ? (
                   <div
-                    className='prose max-w-full pb-50 lg:prose-lg xl:prose-xl md:pr-100'
+                    className="prose max-w-full pb-50 lg:prose-lg xl:prose-xl md:pr-100"
                     dangerouslySetInnerHTML={{
                       __html: faq.answer,
                     }}

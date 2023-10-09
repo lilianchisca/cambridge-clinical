@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { DndProvider, useDrag, useDrop } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { cn } from '@/helpers/cn'
 import { getRgbChannels } from '@/helpers/hex-rgb'
+import { DndProvider, useDrag, useDrop } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
 
@@ -71,18 +71,18 @@ function Drop({
   }, [ref, isActive, canDrop])
 
   return (
-    <div ref={drop} className='relative h-34 w-full'>
+    <div ref={drop} className="relative h-34 w-full">
       <div
         ref={ref}
         className={cn(
           'absolute inset-0 rounded-5 border border-dotted border-[#e1e1e1] transition-all',
           (isActive || canDrop) && 'ring-2'
         )}
-        aria-hidden='true'
+        aria-hidden="true"
       />
       {lastDroppedItem?.answer ? (
         <div
-          className='absolute inset-0 rounded-5 bg-[#f5f6f7] px-15 text-13 leading-[32px]'
+          className="absolute inset-0 rounded-5 bg-[#f5f6f7] px-15 text-13 leading-[32px]"
           dangerouslySetInnerHTML={{ __html: lastDroppedItem.answer }}
         ></div>
       ) : null}
@@ -106,9 +106,9 @@ function Drag({ type, answer, isDropped }: { type: string; answer: string; isDro
   )
 
   return (
-    <div ref={drag} className='p-2'>
+    <div ref={drag} className="p-2">
       <div
-        className='cursor-pointer rounded-5 border border-[#f5f6f7] bg-[#f5f6f7] px-15 text-13 leading-[32px] ring-gray-400 transition-all hover:ring-2'
+        className="cursor-pointer rounded-5 border border-[#f5f6f7] bg-[#f5f6f7] px-15 text-13 leading-[32px] ring-gray-400 transition-all hover:ring-2"
         style={{ opacity: isDropped ? 0.4 : opacity }}
         dangerouslySetInnerHTML={{ __html: answer }}
       ></div>
@@ -179,9 +179,9 @@ export function TestQuestionRanking({ question }: TestQuestionRankingProps) {
   return (
     <DndProvider backend={HTML5Backend}>
       {dustbins.map((dustbin, index) => (
-        <div className='mb-30' key={index}>
-          <div className='flex items-center'>
-            <div className='mr-10 font-bold text-primary-400'>{letters[index]}.</div>
+        <div className="mb-30" key={index}>
+          <div className="flex items-center">
+            <div className="mr-10 font-bold text-primary-400">{letters[index]}.</div>
             <Drop
               accept={answers}
               onDrop={(item) => handleDrop(index, item)}
@@ -190,9 +190,9 @@ export function TestQuestionRanking({ question }: TestQuestionRankingProps) {
           </div>
         </div>
       ))}
-      <div className='-mx-2 mt-35 flex flex-wrap'>
+      <div className="-mx-2 mt-35 flex flex-wrap">
         {boxes.map((box, index) => (
-          <div className='mb-10 mr-8' key={index}>
+          <div className="mb-10 mr-8" key={index}>
             <Drag type={box.type} answer={box.answer} isDropped={box.added} />
           </div>
         ))}

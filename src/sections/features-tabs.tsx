@@ -1,7 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import { useState } from 'react'
+import Image from 'next/image'
 
 import { getPaddings } from '@/helpers/get-paddings'
 
@@ -29,10 +29,10 @@ export default function FeaturesTabs({
     <div
       className={`relative overflow-hidden text-center ${getPaddings(topPadding, bottomPadding)}`}
     >
-      <div className='c-container'>
-        <h2 className='h2 text-secondary-400' dangerouslySetInnerHTML={{ __html: title }}></h2>
+      <div className="c-container">
+        <h2 className="h2 text-secondary-400" dangerouslySetInnerHTML={{ __html: title }}></h2>
 
-        <div className='-mx-5 mt-30 flex flex-wrap items-center justify-center md:mt-40 md:flex-nowrap lg:mt-50 xl:mt-60'>
+        <div className="-mx-5 mt-30 flex flex-wrap items-center justify-center md:mt-40 md:flex-nowrap lg:mt-50 xl:mt-60">
           {features.map((feature) => (
             <div
               className={`mb-10 w-full px-5 sm:w-1/2 md:w-auto md:grow ${
@@ -53,14 +53,14 @@ export default function FeaturesTabs({
           ))}
         </div>
 
-        <div className='mt-20 overflow-hidden rounded-15 shadow-lg lg:mt-30 xl:mt-40'>
+        <div className="mt-20 overflow-hidden rounded-15 shadow-lg lg:mt-30 xl:mt-40">
           <Image
             src={
               features.find((feature) => feature.title === activeTab)?.image.sourceUrl ??
               '/images/content/blank.png'
             }
             alt={activeTab}
-            className='h-auto w-full'
+            className="h-auto w-full"
             width={1000}
             height={600}
           />

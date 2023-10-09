@@ -1,8 +1,7 @@
+import type { Page_Builder_Sections } from '@/types/wordpress'
 import type { Metadata } from 'next'
 
 import { getPageByUri } from '@/lib/pages'
-
-import type { Page_Builder_Sections } from '@/types/wordpress'
 
 import ThemeSection from '@/components/theme-section'
 

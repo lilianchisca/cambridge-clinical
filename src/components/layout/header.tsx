@@ -1,12 +1,13 @@
 'use client'
 
-import { useRect } from '@reach/rect'
-import { Squash as Hamburger } from 'hamburger-react'
-import { ChevronLeft, ChevronRight, Search, ShoppingBag, User } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+
+import { useRect } from '@reach/rect'
+import { Squash as Hamburger } from 'hamburger-react'
+import { ChevronLeft, ChevronRight, Search, ShoppingBag, User } from 'lucide-react'
 import { useLockedBody } from 'usehooks-ts'
 
 import LoginForm from '@/components/forms/login-form'
@@ -115,25 +116,25 @@ export default function Header() {
         }`}
       >
         {headerLinks.map(({ href, label, sublinks }) => (
-          <div className='relative border-t border-white/20 last-of-type:border-b' key={href}>
+          <div className="relative border-t border-white/20 last-of-type:border-b" key={href}>
             <button
-              className='block w-full appearance-none px-15 py-20 text-left text-22 leading-none md:py-20 md:text-25'
+              className="block w-full appearance-none px-15 py-20 text-left text-22 leading-none md:py-20 md:text-25"
               onClick={() => navigateAndClose(href)}
             >
               <span dangerouslySetInnerHTML={{ __html: label }}></span>
             </button>
             {sublinks.length > 0 && (
               <button
-                className='absolute inset-y-0 right-0 flex w-60 items-center justify-center border-l border-white/20 text-white'
+                className="absolute inset-y-0 right-0 flex w-60 items-center justify-center border-l border-white/20 text-white"
                 onClick={() => hoveredParentSet(label)}
-                aria-label='Open sublinks'
+                aria-label="Open sublinks"
               >
                 <span
                   className={`transition-all ${
                     hoveredParent === label ? 'rotate-180' : 'rotate-0'
                   }`}
                 >
-                  <ChevronRight className='w-20' />
+                  <ChevronRight className="w-20" />
                 </span>
               </button>
             )}
@@ -149,24 +150,24 @@ export default function Header() {
                 hoveredParent === parentLabel ? 'translate-x-0' : 'translate-x-full'
               }`}
             >
-              <div className='relative border-t border-white/20'>
+              <div className="relative border-t border-white/20">
                 <button
-                  className='relative block w-full appearance-none py-20 pl-75 pr-15 text-left text-22 leading-none md:py-20 md:text-25'
+                  className="relative block w-full appearance-none py-20 pl-75 pr-15 text-left text-22 leading-none md:py-20 md:text-25"
                   onClick={() => hoveredParentSet(null)}
                 >
-                  <span className='absolute inset-y-0 left-0 flex w-60 items-center justify-center border-r border-white/20 text-white'>
-                    <ChevronLeft className='w-20' />
+                  <span className="absolute inset-y-0 left-0 flex w-60 items-center justify-center border-r border-white/20 text-white">
+                    <ChevronLeft className="w-20" />
                   </span>
                   Back
                 </button>
               </div>
               {sublinks.map((sublink) => (
                 <div
-                  className='relative border-t border-white/20 last-of-type:border-b'
+                  className="relative border-t border-white/20 last-of-type:border-b"
                   key={sublink.href}
                 >
                   <button
-                    className='block w-full appearance-none px-15 py-20 text-left text-22 leading-none md:py-20 md:text-25'
+                    className="block w-full appearance-none px-15 py-20 text-left text-22 leading-none md:py-20 md:text-25"
                     onClick={() => navigateAndClose(sublink.href)}
                   >
                     <span dangerouslySetInnerHTML={{ __html: sublink.label }}></span>
@@ -186,10 +187,10 @@ export default function Header() {
                 hoveredParent === parentLabel ? 'translate-y-0' : '-translate-y-full'
               }`}
             >
-              <div className='flex items-center justify-center pt-header-height'>
+              <div className="flex items-center justify-center pt-header-height">
                 {sublinks.map(({ href, label }) => (
                   <Link
-                    className='mx-15 text-12 font-bold uppercase transition-all hover:opacity-50 2lg:text-16 xl:mx-25'
+                    className="mx-15 text-12 font-bold uppercase transition-all hover:opacity-50 2lg:text-16 xl:mx-25"
                     href={href}
                     key={href}
                   >
@@ -200,32 +201,32 @@ export default function Header() {
             </div>
           )
       )}
-      <header className='fixed inset-x-0 top-0 z-150'>
+      <header className="fixed inset-x-0 top-0 z-150">
         <div
           ref={headerRef}
-          className='bg-primary-600 p-10 text-white shadow-header md:py-20 lg:px-20 xl:pr-30 2xl:pr-40'
+          className="bg-primary-600 p-10 text-white shadow-header md:py-20 lg:px-20 xl:pr-30 2xl:pr-40"
         >
-          <div className='flex justify-between'>
-            <Link href='/' className='inline-block shrink-0 xl:w-169 2xl:w-199'>
+          <div className="flex justify-between">
+            <Link href="/" className="inline-block shrink-0 xl:w-169 2xl:w-199">
               <Image
-                src='/images/logo-white.png'
-                alt='Cambridge Clinical'
+                src="/images/logo-white.png"
+                alt="Cambridge Clinical"
                 priority={true}
-                className='h-55 w-120 lg:h-47 lg:w-100 2lg:h-55 2lg:w-120 xl:h-79 xl:w-169 2xl:h-93 2xl:w-199'
+                className="h-55 w-120 lg:h-47 lg:w-100 2lg:h-55 2lg:w-120 xl:h-79 xl:w-169 2xl:h-93 2xl:w-199"
                 width={199}
                 height={93}
               />
             </Link>
 
-            <nav className='hidden lg:flex'>
+            <nav className="hidden lg:flex">
               {headerLinks.map(({ href, label }) => (
                 <div
-                  className='flex h-full items-center'
+                  className="flex h-full items-center"
                   key={href}
                   onMouseEnter={() => hoveredParentSet(label)}
                 >
                   <Link
-                    className='c-linkline ml-20 text-12 font-bold uppercase leading-loose text-white 2lg:text-14 xl:ml-25 2xl:ml-35'
+                    className="c-linkline ml-20 text-12 font-bold uppercase leading-loose text-white 2lg:text-14 xl:ml-25 2xl:ml-35"
                     href={href}
                     dangerouslySetInnerHTML={{ __html: label }}
                   />
@@ -233,28 +234,28 @@ export default function Header() {
               ))}
             </nav>
 
-            <nav className='flex items-center'>
+            <nav className="flex items-center">
               <button
-                className='ml-20 transition-all hover:opacity-80 xl:ml-30 2xl:ml-35'
-                aria-label='Show Search'
+                className="ml-20 transition-all hover:opacity-80 xl:ml-30 2xl:ml-35"
+                aria-label="Show Search"
               >
-                <Search className='w-25 lg:w-20 xl:w-25' />
+                <Search className="w-25 lg:w-20 xl:w-25" />
               </button>
               <button
-                className='ml-20 transition-all hover:opacity-80 xl:ml-30 2xl:ml-35'
-                aria-label='My Account'
+                className="ml-20 transition-all hover:opacity-80 xl:ml-30 2xl:ml-35"
+                aria-label="My Account"
                 onClick={() => showLoginSet(true)}
               >
-                <User className='w-25 lg:w-20 xl:w-25' />
+                <User className="w-25 lg:w-20 xl:w-25" />
               </button>
               <button
-                className='ml-20 transition-all hover:opacity-80 xl:ml-30 2xl:ml-35'
-                aria-label='Cart'
+                className="ml-20 transition-all hover:opacity-80 xl:ml-30 2xl:ml-35"
+                aria-label="Cart"
               >
-                <ShoppingBag className='w-25 lg:w-20 xl:w-25' />
+                <ShoppingBag className="w-25 lg:w-20 xl:w-25" />
               </button>
-              <span className='ml-15 lg:hidden'>
-                <Hamburger label='Open Menu' toggled={isOpen} toggle={isOpenSet} size={25} />
+              <span className="ml-15 lg:hidden">
+                <Hamburger label="Open Menu" toggled={isOpen} toggle={isOpenSet} size={25} />
               </span>
             </nav>
           </div>

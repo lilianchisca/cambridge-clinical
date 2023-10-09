@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { getAllPages, getPageByUri } from '@/lib/pages'
-
 import type { Page_Builder_Sections } from '@/types/wordpress'
+import type { Metadata } from 'next'
+
+import { getAllPages, getPageByUri } from '@/lib/pages'
 
 import ThemeSection from '@/components/theme-section'
 

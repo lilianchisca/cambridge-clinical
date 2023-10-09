@@ -1,7 +1,7 @@
+import { env } from '@/env.mjs'
+
 import type { JSONResponseWithData } from '@/types/common'
 import type { GetAllPagesQuery, GetPageByUriQuery } from '@/types/wordpress'
-
-import { env } from '@/env.mjs'
 
 export async function getAllPages() {
   const res = await fetch(`${env.NEXT_PUBLIC_WORDPRESS_GRAPHQL_ENDPOINT}?queryId=getAllPages`, {

@@ -1,8 +1,7 @@
+import { env } from '@/env.mjs'
 import chalk, { ChalkInstance } from 'chalk'
 import log from 'loglevel'
 import prefix from 'loglevel-plugin-prefix'
-
-import { env } from '@/env.mjs'
 
 type ChalkColors = {
   [key: string]: ChalkInstance

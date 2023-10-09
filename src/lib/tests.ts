@@ -1,7 +1,7 @@
+import { env } from '@/env.mjs'
+
 import type { JSONResponseWithData } from '@/types/common'
 import type { GetTestByUriQuery } from '@/types/wordpress'
-
-import { env } from '@/env.mjs'
 
 export async function getTestByUri(uri: string | string[]) {
   const _uri = Array.isArray(uri) ? uri.join('/') : uri

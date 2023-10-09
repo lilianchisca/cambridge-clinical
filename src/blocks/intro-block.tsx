@@ -16,13 +16,13 @@ export default function IntroBlock({ section }: IntroBlockProps) {
         bottomPadding
       )}`}
     >
-      <div className='c-container'>
+      <div className="c-container">
         {title ? (
-          <h2 className='h2 text-secondary-400' dangerouslySetInnerHTML={{ __html: title }}></h2>
+          <h2 className="h2 text-secondary-400" dangerouslySetInnerHTML={{ __html: title }}></h2>
         ) : null}
         {content ? (
           <div
-            className='prose mt-25 max-w-full lg:prose-lg xl:prose-xl lg:mt-35'
+            className="prose mt-25 max-w-full lg:prose-lg xl:prose-xl lg:mt-35"
             dangerouslySetInnerHTML={{ __html: content }}
           ></div>
         ) : null}

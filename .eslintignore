@@ -47,4 +47,7 @@ public
 .all-contributorsrc
 
 src/types/wordpress.d.ts
-src/types/wordpress.ts
+commitlint.config.js
+preInit.js
+tailwind-config.js
+todos

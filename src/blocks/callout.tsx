@@ -15,21 +15,21 @@ export default function Callout({ section }: CalloutProps) {
     <div
       className={`relative overflow-hidden text-center ${getPaddings(topPadding, bottomPadding)}`}
     >
-      <div className='c-container'>
+      <div className="c-container">
         {pretitle ? (
           <h3
-            className='text-16 font-bold uppercase leading-none text-primary-600 md:text-18 lg:text-20 xl:text-22'
+            className="text-16 font-bold uppercase leading-none text-primary-600 md:text-18 lg:text-20 xl:text-22"
             dangerouslySetInnerHTML={{ __html: pretitle }}
           ></h3>
         ) : null}
         {title ? (
           <h2
-            className='h2 mt-25 text-secondary-400 md:mt-30'
+            className="h2 mt-25 text-secondary-400 md:mt-30"
             dangerouslySetInnerHTML={{ __html: title }}
           ></h2>
         ) : null}
         {button?.url ? (
-          <div className='mt-25 text-center md:mt-30 lg:mt-40'>
+          <div className="mt-25 text-center md:mt-30 lg:mt-40">
             <Button href={button.url}>{button.title}</Button>
           </div>
         ) : null}
