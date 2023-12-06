@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import Balancer from 'react-wrap-balancer'
 
-import Button from '@/components/ui/button'
+import LinkButton from '@/components/ui/link-button'
 
 type CalloutBigProps = {
   topTitle: string
@@ -59,7 +59,7 @@ export default function CalloutBig({
                   dangerouslySetInnerHTML={{ __html: topContent }}
                 ></Balancer>
                 <div className="mt-25 md:mt-30">
-                  <Button href={topButton.url}>{topButton.title}</Button>
+                  <LinkButton href={topButton.url}>{topButton.title}</LinkButton>
                 </div>
               </div>
             </div>
@@ -146,7 +146,7 @@ export default function CalloutBig({
                   dangerouslySetInnerHTML={{ __html: bottomContent }}
                 ></Balancer>
                 <div className="mt-25 md:mt-30">
-                  <Button href={bottomButton.url}>{bottomButton.title}</Button>
+                  <LinkButton href={bottomButton.url}>{bottomButton.title}</LinkButton>
                 </div>
               </div>
             </div>

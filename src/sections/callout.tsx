@@ -1,6 +1,6 @@
 import { getPaddings } from '@/helpers/get-paddings'
 
-import Button from '@/components/ui/button'
+import LinkButton from '@/components/ui/link-button'
 
 type CalloutProps = {
   title: string
@@ -34,7 +34,7 @@ export default function Callout({
           dangerouslySetInnerHTML={{ __html: title }}
         ></h2>
         <div className="mt-25 text-center md:mt-30 lg:mt-40">
-          <Button href={button.url}>{button.title}</Button>
+          <LinkButton href={button.url}>{button.title}</LinkButton>
         </div>
       </div>
     </div>

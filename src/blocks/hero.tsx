@@ -4,7 +4,7 @@ import Balancer from 'react-wrap-balancer'
 
 import { Page_Builder_Sections_Hero } from '@/types/wordpress'
 
-import Button from '@/components/ui/button'
+import LinkButton from '@/components/ui/link-button'
 
 type HeroProps = {
   section: Page_Builder_Sections_Hero
@@ -44,7 +44,7 @@ export default function Hero({ section }: HeroProps) {
               ) : null}
               {button?.url ? (
                 <div className="mt-30 md:mt-40">
-                  <Button href={button.url}>{button.title}</Button>
+                  <LinkButton href={button.url}>{button.title}</LinkButton>
                 </div>
               ) : null}
             </div>

@@ -2,7 +2,7 @@ import { getPaddings } from '@/helpers/get-paddings'
 
 import { Page_Builder_Sections_Callout } from '@/types/wordpress'
 
-import Button from '@/components/ui/button'
+import LinkButton from '@/components/ui/link-button'
 
 type CalloutProps = {
   section: Page_Builder_Sections_Callout
@@ -30,7 +30,7 @@ export default function Callout({ section }: CalloutProps) {
         ) : null}
         {button?.url ? (
           <div className="mt-25 text-center md:mt-30 lg:mt-40">
-            <Button href={button.url}>{button.title}</Button>
+            <LinkButton href={button.url}>{button.title}</LinkButton>
           </div>
         ) : null}
       </div>

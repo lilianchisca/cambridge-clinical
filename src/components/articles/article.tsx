@@ -1,7 +1,8 @@
-import Button from '@/components/ui/button'
 import Input from '@/components/ui/input'
 import Switch from '@/components/ui/switch'
 import TextArea from '@/components/ui/textarea'
+
+import LinkButton from '../ui/link-button'
 
 type ArticleProps = {
   content: string
@@ -47,9 +48,9 @@ export default function Article({ content }: ArticleProps) {
                 <TextArea placeholder="Question or comment" className="bg-primary-100" />
               </div>
               <div className="text-center md:text-right">
-                <Button type="submit" href="#">
+                <LinkButton type="submit" href="#">
                   Post
-                </Button>
+                </LinkButton>
               </div>
             </div>
           </div>

@@ -1,17 +1,31 @@
 import Image from 'next/image'
 
+import { cn } from '@/helpers/cn'
+
 type PageIntroProps = {
+  smallerTitle?: boolean
   title: string
-  pretitle: string
+  pretitle?: string
   content?: string
   image: {
     sourceUrl: string
   }
 }
 
-export default function PageIntro({ title, pretitle, content, image }: PageIntroProps) {
+export default function PageIntro({
+  title,
+  pretitle,
+  content,
+  image,
+  smallerTitle = false,
+}: PageIntroProps) {
   return (
-    <div className="relative flex min-h-[420px] flex-col justify-center overflow-hidden pt-header-height-initial md:min-h-[400px] lg:min-h-[650px]">
+    <div
+      className={cn(
+        'relative flex min-h-[420px] flex-col justify-center overflow-hidden pt-header-height-initial',
+        !pretitle ? 'text-center' : 'md:min-h-[400px] lg:min-h-[650px]'
+      )}
+    >
       <Image
         src={image.sourceUrl}
         fill
@@ -19,13 +33,18 @@ export default function PageIntro({ title, pretitle, content, image }: PageIntro
         className="object-cover object-center"
       />
 
-      <div className="relative text-center text-white md:text-left">
+      <div className={cn('relative text-center text-white', pretitle && 'md:text-left')}>
         <div className="c-container">
-          <h2
-            className="text-16 font-bold uppercase leading-none"
-            dangerouslySetInnerHTML={{ __html: pretitle }}
-          ></h2>
-          <h1 className="h1 mt-10" dangerouslySetInnerHTML={{ __html: title }}></h1>
+          {pretitle ? (
+            <h2
+              className="text-16 font-bold uppercase leading-none"
+              dangerouslySetInnerHTML={{ __html: pretitle }}
+            ></h2>
+          ) : null}
+          <h1
+            className={cn('mt-10', smallerTitle ? 'h1sm' : 'h1')}
+            dangerouslySetInnerHTML={{ __html: title }}
+          ></h1>
           {content && (
             <div
               className="max-sm:hide-br prose mt-15 w-full max-w-full text-white lg:prose-lg xl:prose-xl"

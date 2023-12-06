@@ -10,20 +10,29 @@ type SelectProps = {
   value: string
   btnClasses?: string
   onValueChange: (value: string) => void
+  isAlt?: boolean
 }
 
-const Select = ({ options, value, btnClasses, onValueChange }: SelectProps) => {
+const Select = ({ options, value, btnClasses, onValueChange, isAlt = false }: SelectProps) => {
   return (
     <SelectPrimitive.Root value={value} onValueChange={onValueChange}>
       <SelectPrimitive.Trigger asChild aria-label="Food">
         <button
           className={cn(
-            'relative inline-flex min-w-[240px] rounded-full bg-white py-16 pl-25 pr-90 text-16 text-gray-400 transition-all hover:ring-4 hover:ring-primary-300/50 focus:outline-none focus:ring-4 focus:ring-primary-300/50',
+            'relative inline-flex min-w-[240px] rounded-full bg-white pl-25 pr-90 transition-all hover:ring-4 hover:ring-primary-300/50 focus:outline-none focus:ring-4 focus:ring-primary-300/50',
+            isAlt
+              ? 'w-full py-10 text-16 text-secondary-400/80 md:text-17 lg:text-18 xl:text-19 2xl:text-20'
+              : 'py-16 text-16 text-gray-400',
             btnClasses
           )}
         >
           <SelectPrimitive.Value />
-          <span className="absolute right-7 top-1/2 z-10 h-38 w-38 -translate-y-1/2 overflow-hidden rounded-full bg-primary-100 text-primary-600 md:h-40 md:w-40 lg:h-42 lg:w-42 xl:h-44 xl:w-44">
+          <span
+            className={cn(
+              'absolute right-7 top-1/2 z-10 h-38 w-38 -translate-y-1/2 overflow-hidden rounded-full bg-primary-100 text-primary-600',
+              isAlt ? '' : 'md:h-40 md:w-40 lg:h-42 lg:w-42 xl:h-44 xl:w-44'
+            )}
+          >
             <span className="absolute inset-0 flex items-center justify-center transition-all group-hover:translate-x-full">
               <span>
                 <ArrowDown size={20} />
@@ -48,9 +57,12 @@ const Select = ({ options, value, btnClasses, onValueChange }: SelectProps) => {
                 key={`${f}-${i}`}
                 value={f}
                 className={cn(
-                  'relative flex items-center rounded-full px-32 py-16 text-16 font-medium text-gray-400 focus:bg-primary-100/50',
+                  'relative flex items-center rounded-full px-32 focus:bg-primary-100/50',
                   'radix-disabled:opacity-50',
-                  'select-none focus:outline-none'
+                  'select-none focus:outline-none',
+                  isAlt
+                    ? 'py-10 text-16 text-secondary-400/80 md:text-17 lg:text-18 xl:text-19 2xl:text-20'
+                    : 'py-16 text-16 font-medium text-gray-400'
                 )}
               >
                 <SelectPrimitive.ItemText>{f}</SelectPrimitive.ItemText>

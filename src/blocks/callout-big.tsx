@@ -4,7 +4,7 @@ import Balancer from 'react-wrap-balancer'
 
 import { Page_Builder_Sections_CalloutBig } from '@/types/wordpress'
 
-import Button from '@/components/ui/button'
+import LinkButton from '@/components/ui/link-button'
 
 type CalloutBigProps = {
   section: Page_Builder_Sections_CalloutBig
@@ -47,7 +47,7 @@ export default function CalloutBig({ section }: CalloutBigProps) {
                 ) : null}
                 {topButton?.url ? (
                   <div className="mt-25 md:mt-30">
-                    <Button href={topButton.url}>{topButton.title}</Button>
+                    <LinkButton href={topButton.url}>{topButton.title}</LinkButton>
                   </div>
                 ) : null}
               </div>
@@ -148,7 +148,7 @@ export default function CalloutBig({ section }: CalloutBigProps) {
                 ) : null}
                 {bottomButton?.url ? (
                   <div className="mt-25 md:mt-30">
-                    <Button href={bottomButton.url}>{bottomButton.title}</Button>
+                    <LinkButton href={bottomButton.url}>{bottomButton.title}</LinkButton>
                   </div>
                 ) : null}
               </div>

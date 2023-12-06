@@ -3,7 +3,7 @@ import { Check } from 'lucide-react'
 
 import { Page_Builder_Sections_Pricing } from '@/types/wordpress'
 
-import Button from '@/components/ui/button'
+import LinkButton from '@/components/ui/link-button'
 
 type PricingProps = {
   section: Page_Builder_Sections_Pricing
@@ -39,9 +39,9 @@ export default function Pricing({ section }: PricingProps) {
               <div className="my-30 text-18 leading-tight text-secondary-400/60 lg:text-25">
                 / £36 per hour
               </div>
-              <Button href="#" className="w-full">
+              <LinkButton href="#" className="w-full">
                 Buy Now
-              </Button>
+              </LinkButton>
             </div>
           </div>
           <div className="mt-20 w-full px-10 md:w-1/3">
@@ -58,9 +58,9 @@ export default function Pricing({ section }: PricingProps) {
               <div className="my-30 text-18 leading-tight text-secondary-400/60 lg:text-25">
                 / £36 per hour
               </div>
-              <Button href="#" className="w-full">
+              <LinkButton href="#" className="w-full">
                 Buy Now
-              </Button>
+              </LinkButton>
             </div>
           </div>
           <div className="mt-20 w-full px-10 md:w-1/3">
@@ -77,9 +77,9 @@ export default function Pricing({ section }: PricingProps) {
               <div className="my-30 text-18 leading-tight text-secondary-400/60 lg:text-25">
                 / £36 per hour
               </div>
-              <Button href="#" className="w-full">
+              <LinkButton href="#" className="w-full">
                 Buy Now
-              </Button>
+              </LinkButton>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import Balancer from 'react-wrap-balancer'
 
-import Button from '@/components/ui/button'
+import LinkButton from '@/components/ui/link-button'
 
 type HeroProps = {
   title: string
@@ -42,7 +42,7 @@ export default function Hero({ title, content, features, button, image }: HeroPr
                 dangerouslySetInnerHTML={{ __html: content }}
               ></div>
               <div className="mt-30 md:mt-40">
-                <Button href={button.url}>{button.title}</Button>
+                <LinkButton href={button.url}>{button.title}</LinkButton>
               </div>
             </div>
           </div>
