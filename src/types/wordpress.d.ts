@@ -54,10 +54,16 @@ export type AliasName = DatabaseIdentifier & Node & TermNode & UniformResourceId
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** Connection between the AliasName type and the graphqlDocument type */
   graphqlDocuments?: Maybe<AliasNameToGraphqlDocumentConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -215,7 +221,7 @@ export type AliasNameToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -286,7 +292,7 @@ export type AliasNameToGraphqlDocumentConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -378,10 +384,16 @@ export type Category = DatabaseIdentifier & HierarchicalNode & HierarchicalTermN
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -678,7 +690,7 @@ export type CategoryToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -774,7 +786,7 @@ export type CategoryToPostConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -804,7 +816,7 @@ export type CategoryToTaxonomyConnectionEdge = Edge & OneToOneConnection & Taxon
 };
 
 /** A Comment object */
-export type Comment = DatabaseIdentifier & Node & {
+export type Comment = DatabaseIdentifier & Node & UniformResourceIdentifiable & {
   __typename?: 'Comment';
   /** User agent used to post the comment. This field is equivalent to WP_Comment-&gt;comment_agent and the value matching the &quot;comment_agent&quot; column in SQL. */
   agent?: Maybe<Scalars['String']['output']>;
@@ -815,7 +827,10 @@ export type Comment = DatabaseIdentifier & Node & {
   approved?: Maybe<Scalars['Boolean']['output']>;
   /** The author of the comment */
   author?: Maybe<CommentToCommenterConnectionEdge>;
-  /** IP address for the author. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL. */
+  /**
+   * IP address for the author at the time of commenting. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL.
+   * @deprecated Use the ipAddress field on the edge between the comment and author
+   */
   authorIp?: Maybe<Scalars['String']['output']>;
   /**
    * ID for the comment, unique among comments.
@@ -834,10 +849,22 @@ export type Comment = DatabaseIdentifier & Node & {
   dateGmt?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the comment object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean']['output'];
   /** Karma value for the comment. This field is equivalent to WP_Comment-&gt;comment_karma and the value matching the &quot;comment_karma&quot; column in SQL. */
   karma?: Maybe<Scalars['Int']['output']>;
+  /** The permalink of the comment */
+  link?: Maybe<Scalars['String']['output']>;
   /** Connection between the Comment type and the Comment type */
   parent?: Maybe<CommentToParentCommentConnectionEdge>;
   /** The database id of the parent comment node or null if it is the root comment */
@@ -850,6 +877,8 @@ export type Comment = DatabaseIdentifier & Node & {
   status?: Maybe<CommentStatusEnum>;
   /** Type of comment. This field is equivalent to WP_Comment-&gt;comment_type and the value matching the &quot;comment_type&quot; column in SQL. */
   type?: Maybe<Scalars['String']['output']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -947,7 +976,7 @@ export enum CommentStatusEnum {
   Hold = 'HOLD',
   /** Comments with the Spam status */
   Spam = 'SPAM',
-  /** Comments with the Trash status */
+  /** Comments with the Bin status */
   Trash = 'TRASH'
 }
 
@@ -1051,8 +1080,16 @@ export type CommentToCommenterConnectionEdge = CommenterConnectionEdge & Edge & 
   __typename?: 'CommentToCommenterConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
   cursor?: Maybe<Scalars['String']['output']>;
+  /** The email address representing the author for this particular comment */
+  email?: Maybe<Scalars['String']['output']>;
+  /** IP address of the author at the time of making this comment. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL. */
+  ipAddress?: Maybe<Scalars['String']['output']>;
+  /** The display name of the comment author for this particular comment */
+  name?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Commenter;
+  /** The url entered for the comment author on this particular comment */
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the Comment type and the ContentNode type */
@@ -1231,10 +1268,16 @@ export type ContentNode = {
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -1447,6 +1490,8 @@ export type ContentType = Node & UniformResourceIdentifiable & {
   hierarchical?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the post-type object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
   /** Whether this page is set to the static front page. */
@@ -1625,7 +1670,7 @@ export type ContentTypeToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -1690,6 +1735,12 @@ export enum ContentTypesOfCategoryEnum {
   Post = 'POST'
 }
 
+/** Allowed Content Types of the GraphqlDocumentGroup taxonomy. */
+export enum ContentTypesOfGraphqlDocumentGroupEnum {
+  /** The Type of Content object */
+  GraphqlDocument = 'GRAPHQL_DOCUMENT'
+}
+
 /** Allowed Content Types of the PostFormat taxonomy. */
 export enum ContentTypesOfPostFormatEnum {
   /** The Type of Content object */
@@ -1736,10 +1787,18 @@ export type Course = ContentNode & DatabaseIdentifier & HierarchicalContentNode 
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the course object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the course object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -1760,6 +1819,8 @@ export type Course = ContentNode & DatabaseIdentifier & HierarchicalContentNode 
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the course object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Course type and the course type */
   preview?: Maybe<CourseToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -1985,6 +2046,29 @@ export type CreateCoursePayload = {
   course?: Maybe<Course>;
 };
 
+/** Input for the createGraphqlDocumentGroup mutation. */
+export type CreateGraphqlDocumentGroupInput = {
+  /** The slug that the graphql_document_group will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The description of the graphql_document_group object */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The name of the graphql_document_group object to mutate */
+  name: Scalars['String']['input'];
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the createGraphqlDocumentGroup mutation. */
+export type CreateGraphqlDocumentGroupPayload = {
+  __typename?: 'CreateGraphqlDocumentGroupPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The created graphql_document_group */
+  graphqlDocumentGroup?: Maybe<GraphqlDocumentGroup>;
+};
+
 /** Input for the createGraphqlDocument mutation. */
 export type CreateGraphqlDocumentInput = {
   /** Alias names for saved GraphQL query documents */
@@ -2001,6 +2085,8 @@ export type CreateGraphqlDocumentInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   /** Allow, deny or default access grant for specific query */
   grant?: InputMaybe<Scalars['String']['input']>;
+  /** Set connections between the graphqlDocument and graphqlDocumentGroups */
+  graphqlDocumentGroups?: InputMaybe<GraphqlDocumentGraphqlDocumentGroupsInput>;
   /** HTTP Cache-Control max-age directive for a saved GraphQL document */
   maxAgeHeader?: InputMaybe<Scalars['Int']['input']>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
@@ -2133,6 +2219,29 @@ export type CreatePagePayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   page?: Maybe<Page>;
+};
+
+/** Input for the createPatternCategory mutation. */
+export type CreatePatternCategoryInput = {
+  /** The slug that the wp_pattern_category will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The description of the wp_pattern_category object */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The name of the wp_pattern_category object to mutate */
+  name: Scalars['String']['input'];
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the createPatternCategory mutation. */
+export type CreatePatternCategoryPayload = {
+  __typename?: 'CreatePatternCategoryPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The created wp_pattern_category */
+  patternCategory?: Maybe<PatternCategory>;
 };
 
 /** Input for the createPostFormat mutation. */
@@ -2486,7 +2595,7 @@ export type DeleteAliasNameInput = {
 /** The payload for the deleteAliasName mutation. */
 export type DeleteAliasNamePayload = {
   __typename?: 'DeleteAliasNamePayload';
-  /** The deteted term object */
+  /** The deleted term object */
   aliasName?: Maybe<AliasName>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<Scalars['String']['output']>;
@@ -2505,7 +2614,7 @@ export type DeleteCategoryInput = {
 /** The payload for the deleteCategory mutation. */
 export type DeleteCategoryPayload = {
   __typename?: 'DeleteCategoryPayload';
-  /** The deteted term object */
+  /** The deleted term object */
   category?: Maybe<Category>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<Scalars['String']['output']>;
@@ -2555,6 +2664,25 @@ export type DeleteCoursePayload = {
   course?: Maybe<Course>;
   /** The ID of the deleted object */
   deletedId?: Maybe<Scalars['ID']['output']>;
+};
+
+/** Input for the deleteGraphqlDocumentGroup mutation. */
+export type DeleteGraphqlDocumentGroupInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the graphqlDocumentGroup to delete */
+  id: Scalars['ID']['input'];
+};
+
+/** The payload for the deleteGraphqlDocumentGroup mutation. */
+export type DeleteGraphqlDocumentGroupPayload = {
+  __typename?: 'DeleteGraphqlDocumentGroupPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']['output']>;
+  /** The deleted term object */
+  graphqlDocumentGroup?: Maybe<GraphqlDocumentGroup>;
 };
 
 /** Input for the deleteGraphqlDocument mutation. */
@@ -2647,6 +2775,25 @@ export type DeletePagePayload = {
   page?: Maybe<Page>;
 };
 
+/** Input for the deletePatternCategory mutation. */
+export type DeletePatternCategoryInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the patternCategory to delete */
+  id: Scalars['ID']['input'];
+};
+
+/** The payload for the deletePatternCategory mutation. */
+export type DeletePatternCategoryPayload = {
+  __typename?: 'DeletePatternCategoryPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']['output']>;
+  /** The deleted term object */
+  patternCategory?: Maybe<PatternCategory>;
+};
+
 /** Input for the deletePostFormat mutation. */
 export type DeletePostFormatInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -2662,7 +2809,7 @@ export type DeletePostFormatPayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
   deletedId?: Maybe<Scalars['ID']['output']>;
-  /** The deteted term object */
+  /** The deleted term object */
   postFormat?: Maybe<PostFormat>;
 };
 
@@ -2704,7 +2851,7 @@ export type DeleteQuestionCategoryPayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
   deletedId?: Maybe<Scalars['ID']['output']>;
-  /** The deteted term object */
+  /** The deleted term object */
   questionCategory?: Maybe<QuestionCategory>;
 };
 
@@ -2746,7 +2893,7 @@ export type DeleteTagPayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
   deletedId?: Maybe<Scalars['ID']['output']>;
-  /** The deteted term object */
+  /** The deleted term object */
   tag?: Maybe<Tag>;
 };
 
@@ -2859,11 +3006,23 @@ export type Edge = {
 
 /** Asset enqueued by the CMS */
 export type EnqueuedAsset = {
-  /** @todo */
+  /** The inline code to be run after the asset is loaded. */
+  after?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /**
+   * Deprecated
+   * @deprecated Use `EnqueuedAsset.media` instead.
+   */
   args?: Maybe<Scalars['Boolean']['output']>;
+  /** The inline code to be run before the asset is loaded. */
+  before?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc */
+  conditional?: Maybe<Scalars['String']['output']>;
   /** Dependencies needed to use this asset */
-  dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
-  /** Extra information needed for the script */
+  dependencies?: Maybe<Array<Maybe<EnqueuedAsset>>>;
+  /**
+   * Extra information needed for the script
+   * @deprecated Use `EnqueuedScript.extraData` instead.
+   */
   extra?: Maybe<Scalars['String']['output']>;
   /** The handle of the enqueued asset */
   handle?: Maybe<Scalars['String']['output']>;
@@ -2878,19 +3037,35 @@ export type EnqueuedAsset = {
 /** Script enqueued by the CMS */
 export type EnqueuedScript = EnqueuedAsset & Node & {
   __typename?: 'EnqueuedScript';
-  /** @todo */
+  /** The inline code to be run after the asset is loaded. */
+  after?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /**
+   * Deprecated
+   * @deprecated Use `EnqueuedAsset.media` instead.
+   */
   args?: Maybe<Scalars['Boolean']['output']>;
+  /** The inline code to be run before the asset is loaded. */
+  before?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc */
+  conditional?: Maybe<Scalars['String']['output']>;
   /** Dependencies needed to use this asset */
   dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
-  /** Extra information needed for the script */
+  /**
+   * Extra information needed for the script
+   * @deprecated Use `EnqueuedScript.extraData` instead.
+   */
   extra?: Maybe<Scalars['String']['output']>;
+  /** Extra data supplied to the enqueued script */
+  extraData?: Maybe<Scalars['String']['output']>;
   /** The handle of the enqueued asset */
   handle?: Maybe<Scalars['String']['output']>;
-  /** The ID of the enqueued asset */
+  /** The global ID of the enqueued script */
   id: Scalars['ID']['output'];
   /** The source of the asset */
   src?: Maybe<Scalars['String']['output']>;
-  /** The version of the enqueued asset */
+  /** The loading strategy to use on the script tag */
+  strategy?: Maybe<ScriptLoadingStrategyEnum>;
+  /** The version of the enqueued script */
   version?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2927,19 +3102,43 @@ export type EnqueuedScriptConnectionPageInfo = {
 /** Stylesheet enqueued by the CMS */
 export type EnqueuedStylesheet = EnqueuedAsset & Node & {
   __typename?: 'EnqueuedStylesheet';
-  /** @todo */
+  /** The inline code to be run after the asset is loaded. */
+  after?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /**
+   * Deprecated
+   * @deprecated Use `EnqueuedAsset.media` instead.
+   */
   args?: Maybe<Scalars['Boolean']['output']>;
+  /** The inline code to be run before the asset is loaded. */
+  before?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc */
+  conditional?: Maybe<Scalars['String']['output']>;
   /** Dependencies needed to use this asset */
-  dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
-  /** Extra information needed for the script */
+  dependencies?: Maybe<Array<Maybe<EnqueuedStylesheet>>>;
+  /**
+   * Extra information needed for the script
+   * @deprecated Use `EnqueuedScript.extraData` instead.
+   */
   extra?: Maybe<Scalars['String']['output']>;
   /** The handle of the enqueued asset */
   handle?: Maybe<Scalars['String']['output']>;
-  /** The ID of the enqueued asset */
+  /** The global ID of the enqueued stylesheet */
   id: Scalars['ID']['output'];
+  /** Whether the enqueued style is RTL or not */
+  isRtl?: Maybe<Scalars['Boolean']['output']>;
+  /** The media attribute to use for the link */
+  media?: Maybe<Scalars['String']['output']>;
+  /** The absolute path to the enqueued style. Set when the stylesheet is meant to load inline. */
+  path?: Maybe<Scalars['String']['output']>;
+  /** The `rel` attribute to use for the link */
+  rel?: Maybe<Scalars['String']['output']>;
   /** The source of the asset */
   src?: Maybe<Scalars['String']['output']>;
-  /** The version of the enqueued asset */
+  /** Optional suffix, used in combination with RTL */
+  suffix?: Maybe<Scalars['String']['output']>;
+  /** The title of the enqueued style. Used for preferred/alternate stylesheets. */
+  title?: Maybe<Scalars['String']['output']>;
+  /** The version of the enqueued style */
   version?: Maybe<Scalars['String']['output']>;
 };
 
@@ -3003,6 +3202,11 @@ export type GraphqlDocument = ContentNode & DatabaseIdentifier & Node & NodeWith
   alias?: Maybe<Array<Scalars['String']['output']>>;
   /** Connection between the GraphqlDocument type and the aliasName type */
   aliasNames?: Maybe<GraphqlDocumentToAliasNameConnection>;
+  /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<GraphqlDocumentToGraphqlDocumentConnection>;
   /** The content of the post. */
   content?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the ContentType type */
@@ -3029,6 +3233,8 @@ export type GraphqlDocument = ContentNode & DatabaseIdentifier & Node & NodeWith
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** Allow, deny or default access grant for specific query */
   grant?: Maybe<Scalars['String']['output']>;
+  /** Connection between the GraphqlDocument type and the graphqlDocumentGroup type */
+  graphqlDocumentGroups?: Maybe<GraphqlDocumentToGraphqlDocumentGroupConnection>;
   /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of the databaseId field
@@ -3036,10 +3242,18 @@ export type GraphqlDocument = ContentNode & DatabaseIdentifier & Node & NodeWith
   graphqlDocumentId: Scalars['Int']['output'];
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the graphql_document object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the graphql_document object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -3056,6 +3270,13 @@ export type GraphqlDocument = ContentNode & DatabaseIdentifier & Node & NodeWith
   modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
   modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<GraphqlDocumentToParentConnectionEdge>;
+  /** The password for the graphql_document object. */
+  password?: Maybe<Scalars['String']['output']>;
   /**
    * Connection between the GraphqlDocument type and the graphqlDocument type
    * @deprecated The &quot;GraphqlDocument&quot; Type is not publicly queryable and does not support previews. This field will be removed in the future.
@@ -3091,6 +3312,15 @@ export type GraphqlDocumentAliasNamesArgs = {
 
 
 /** The graphqlDocument type */
+export type GraphqlDocumentAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The graphqlDocument type */
 export type GraphqlDocumentContentArgs = {
   format?: InputMaybe<PostObjectFieldFormatEnum>;
 };
@@ -3111,6 +3341,16 @@ export type GraphqlDocumentEnqueuedStylesheetsArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The graphqlDocument type */
+export type GraphqlDocumentGraphqlDocumentGroupsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<GraphqlDocumentToGraphqlDocumentGroupConnectionWhereArgs>;
 };
 
 
@@ -3177,6 +3417,315 @@ export type GraphqlDocumentConnectionPageInfo = {
   hasPreviousPage: Scalars['Boolean']['output'];
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Set relationships between the graphqlDocument to graphqlDocumentGroups */
+export type GraphqlDocumentGraphqlDocumentGroupsInput = {
+  /** If true, this will append the graphqlDocumentGroup to existing related graphqlDocumentGroups. If false, this will replace existing relationships. Default true. */
+  append?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The input list of items to set. */
+  nodes?: InputMaybe<Array<InputMaybe<GraphqlDocumentGraphqlDocumentGroupsNodeInput>>>;
+};
+
+/** List of graphqlDocumentGroups to connect the graphqlDocument to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
+export type GraphqlDocumentGraphqlDocumentGroupsNodeInput = {
+  /** The description of the graphqlDocumentGroup. This field is used to set a description of the graphqlDocumentGroup if a new one is created during the mutation. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the graphqlDocumentGroup. If present, this will be used to connect to the graphqlDocument. If no existing graphqlDocumentGroup exists with this ID, no connection will be made. */
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** The name of the graphqlDocumentGroup. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the graphqlDocumentGroup. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The graphqlDocumentGroup type */
+export type GraphqlDocumentGroup = DatabaseIdentifier & Node & TermNode & UniformResourceIdentifiable & {
+  __typename?: 'GraphqlDocumentGroup';
+  /** Connection between the GraphqlDocumentGroup type and the ContentNode type */
+  contentNodes?: Maybe<GraphqlDocumentGroupToContentNodeConnection>;
+  /** The number of objects connected to the object */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int']['output'];
+  /** The description of the object */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Connection between the TermNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
+  /** Connection between the TermNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  graphqlDocumentGroupId?: Maybe<Scalars['Int']['output']>;
+  /** Connection between the GraphqlDocumentGroup type and the graphqlDocument type */
+  graphqlDocuments?: Maybe<GraphqlDocumentGroupToGraphqlDocumentConnection>;
+  /** The globally unique ID for the object */
+  id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean']['output'];
+  /** The link to the term */
+  link?: Maybe<Scalars['String']['output']>;
+  /** The human friendly name of the object. */
+  name?: Maybe<Scalars['String']['output']>;
+  /** An alphanumeric identifier for the object unique to its type. */
+  slug?: Maybe<Scalars['String']['output']>;
+  /** Connection between the GraphqlDocumentGroup type and the Taxonomy type */
+  taxonomy?: Maybe<GraphqlDocumentGroupToTaxonomyConnectionEdge>;
+  /** The name of the taxonomy that the object is associated with */
+  taxonomyName?: Maybe<Scalars['String']['output']>;
+  /** The ID of the term group that this term object belongs to */
+  termGroupId?: Maybe<Scalars['Int']['output']>;
+  /** The taxonomy ID that the object is associated with */
+  termTaxonomyId?: Maybe<Scalars['Int']['output']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The graphqlDocumentGroup type */
+export type GraphqlDocumentGroupContentNodesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<GraphqlDocumentGroupToContentNodeConnectionWhereArgs>;
+};
+
+
+/** The graphqlDocumentGroup type */
+export type GraphqlDocumentGroupEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The graphqlDocumentGroup type */
+export type GraphqlDocumentGroupEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The graphqlDocumentGroup type */
+export type GraphqlDocumentGroupGraphqlDocumentsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<GraphqlDocumentGroupToGraphqlDocumentConnectionWhereArgs>;
+};
+
+/** Connection to graphqlDocumentGroup Nodes */
+export type GraphqlDocumentGroupConnection = {
+  /** A list of edges (relational context) between RootQuery and connected graphqlDocumentGroup Nodes */
+  edges: Array<GraphqlDocumentGroupConnectionEdge>;
+  /** A list of connected graphqlDocumentGroup Nodes */
+  nodes: Array<GraphqlDocumentGroup>;
+  /** Information about pagination in a connection. */
+  pageInfo: GraphqlDocumentGroupConnectionPageInfo;
+};
+
+/** Edge between a Node and a connected graphqlDocumentGroup */
+export type GraphqlDocumentGroupConnectionEdge = {
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The connected graphqlDocumentGroup Node */
+  node: GraphqlDocumentGroup;
+};
+
+/** Page Info on the connected GraphqlDocumentGroupConnectionEdge */
+export type GraphqlDocumentGroupConnectionPageInfo = {
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum GraphqlDocumentGroupIdType {
+  /** The Database ID for the node */
+  DatabaseId = 'DATABASE_ID',
+  /** The hashed Global ID */
+  Id = 'ID',
+  /** The name of the node */
+  Name = 'NAME',
+  /** Url friendly name of the node */
+  Slug = 'SLUG',
+  /** The URI for the node */
+  Uri = 'URI'
+}
+
+/** Connection between the GraphqlDocumentGroup type and the ContentNode type */
+export type GraphqlDocumentGroupToContentNodeConnection = Connection & ContentNodeConnection & {
+  __typename?: 'GraphqlDocumentGroupToContentNodeConnection';
+  /** Edges for the GraphqlDocumentGroupToContentNodeConnection connection */
+  edges: Array<GraphqlDocumentGroupToContentNodeConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<ContentNode>;
+  /** Information about pagination in a connection. */
+  pageInfo: GraphqlDocumentGroupToContentNodeConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type GraphqlDocumentGroupToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & {
+  __typename?: 'GraphqlDocumentGroupToContentNodeConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: ContentNode;
+};
+
+/** Page Info on the &quot;GraphqlDocumentGroupToContentNodeConnection&quot; */
+export type GraphqlDocumentGroupToContentNodeConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'GraphqlDocumentGroupToContentNodeConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the GraphqlDocumentGroupToContentNodeConnection connection */
+export type GraphqlDocumentGroupToContentNodeConnectionWhereArgs = {
+  /** The Types of content to filter */
+  contentTypes?: InputMaybe<Array<InputMaybe<ContentTypesOfGraphqlDocumentGroupEnum>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** What parameter to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Connection between the GraphqlDocumentGroup type and the graphqlDocument type */
+export type GraphqlDocumentGroupToGraphqlDocumentConnection = Connection & GraphqlDocumentConnection & {
+  __typename?: 'GraphqlDocumentGroupToGraphqlDocumentConnection';
+  /** Edges for the GraphqlDocumentGroupToGraphqlDocumentConnection connection */
+  edges: Array<GraphqlDocumentGroupToGraphqlDocumentConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<GraphqlDocument>;
+  /** Information about pagination in a connection. */
+  pageInfo: GraphqlDocumentGroupToGraphqlDocumentConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type GraphqlDocumentGroupToGraphqlDocumentConnectionEdge = Edge & GraphqlDocumentConnectionEdge & {
+  __typename?: 'GraphqlDocumentGroupToGraphqlDocumentConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: GraphqlDocument;
+};
+
+/** Page Info on the &quot;GraphqlDocumentGroupToGraphqlDocumentConnection&quot; */
+export type GraphqlDocumentGroupToGraphqlDocumentConnectionPageInfo = GraphqlDocumentConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'GraphqlDocumentGroupToGraphqlDocumentConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the GraphqlDocumentGroupToGraphqlDocumentConnection connection */
+export type GraphqlDocumentGroupToGraphqlDocumentConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** What parameter to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Connection between the GraphqlDocumentGroup type and the Taxonomy type */
+export type GraphqlDocumentGroupToTaxonomyConnectionEdge = Edge & OneToOneConnection & TaxonomyConnectionEdge & {
+  __typename?: 'GraphqlDocumentGroupToTaxonomyConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The node of the connection, without the edges */
+  node: Taxonomy;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -3268,6 +3817,136 @@ export type GraphqlDocumentToAliasNameConnectionWhereArgs = {
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Connection between the GraphqlDocument type and the graphqlDocument type */
+export type GraphqlDocumentToGraphqlDocumentConnection = Connection & GraphqlDocumentConnection & {
+  __typename?: 'GraphqlDocumentToGraphqlDocumentConnection';
+  /** Edges for the GraphqlDocumentToGraphqlDocumentConnection connection */
+  edges: Array<GraphqlDocumentToGraphqlDocumentConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<GraphqlDocument>;
+  /** Information about pagination in a connection. */
+  pageInfo: GraphqlDocumentToGraphqlDocumentConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type GraphqlDocumentToGraphqlDocumentConnectionEdge = Edge & GraphqlDocumentConnectionEdge & {
+  __typename?: 'GraphqlDocumentToGraphqlDocumentConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: GraphqlDocument;
+};
+
+/** Page Info on the &quot;GraphqlDocumentToGraphqlDocumentConnection&quot; */
+export type GraphqlDocumentToGraphqlDocumentConnectionPageInfo = GraphqlDocumentConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'GraphqlDocumentToGraphqlDocumentConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Connection between the GraphqlDocument type and the graphqlDocumentGroup type */
+export type GraphqlDocumentToGraphqlDocumentGroupConnection = Connection & GraphqlDocumentGroupConnection & {
+  __typename?: 'GraphqlDocumentToGraphqlDocumentGroupConnection';
+  /** Edges for the GraphqlDocumentToGraphqlDocumentGroupConnection connection */
+  edges: Array<GraphqlDocumentToGraphqlDocumentGroupConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<GraphqlDocumentGroup>;
+  /** Information about pagination in a connection. */
+  pageInfo: GraphqlDocumentToGraphqlDocumentGroupConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type GraphqlDocumentToGraphqlDocumentGroupConnectionEdge = Edge & GraphqlDocumentGroupConnectionEdge & {
+  __typename?: 'GraphqlDocumentToGraphqlDocumentGroupConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: GraphqlDocumentGroup;
+};
+
+/** Page Info on the &quot;GraphqlDocumentToGraphqlDocumentGroupConnection&quot; */
+export type GraphqlDocumentToGraphqlDocumentGroupConnectionPageInfo = GraphqlDocumentGroupConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'GraphqlDocumentToGraphqlDocumentGroupConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the GraphqlDocumentToGraphqlDocumentGroupConnection connection */
+export type GraphqlDocumentToGraphqlDocumentGroupConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']['input']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']['input']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Connection between the GraphqlDocument type and the graphqlDocument type */
+export type GraphqlDocumentToParentConnectionEdge = Edge & GraphqlDocumentConnectionEdge & OneToOneConnection & {
+  __typename?: 'GraphqlDocumentToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: GraphqlDocument;
 };
 
 /** Connection between the GraphqlDocument type and the graphqlDocument type */
@@ -3393,8 +4072,14 @@ export type HierarchicalContentNode = {
   guid?: Maybe<Scalars['String']['output']>;
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -3520,7 +4205,7 @@ export type HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -3593,7 +4278,7 @@ export type HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -3648,8 +4333,14 @@ export type HierarchicalTermNode = {
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -3731,6 +4422,8 @@ export type Interview = ContentNode & DatabaseIdentifier & HierarchicalContentNo
   featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the interview object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the interview object. */
   id: Scalars['ID']['output'];
   /**
@@ -3738,8 +4431,14 @@ export type Interview = ContentNode & DatabaseIdentifier & HierarchicalContentNo
    * @deprecated Deprecated in favor of the databaseId field
    */
   interviewId: Scalars['Int']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -3760,6 +4459,8 @@ export type Interview = ContentNode & DatabaseIdentifier & HierarchicalContentNo
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the interview object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Interview type and the interview type */
   preview?: Maybe<InterviewToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -3954,10 +4655,18 @@ export type MediaItem = ContentNode & DatabaseIdentifier & HierarchicalContentNo
   fileSize?: Maybe<Scalars['Int']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the attachment object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the attachment object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -3991,6 +4700,8 @@ export type MediaItem = ContentNode & DatabaseIdentifier & HierarchicalContentNo
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the attachment object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** The database id of the preview node */
   previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
@@ -4481,10 +5192,16 @@ export type MenuItemConnectionPageInfo = {
 export type MenuItemLinkable = {
   /** The unique identifier stored in the database */
   databaseId: Scalars['Int']['output'];
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the node is a Term */
   isTermNode: Scalars['Boolean']['output'];
   /** The unique resource identifier path */
@@ -4642,185 +5359,193 @@ export type MenuToMenuItemConnectionWhereArgs = {
 
 /** The MimeType of the object */
 export enum MimeTypeEnum {
-  /** MimeType application/java */
+  /** application/java mime type. */
   ApplicationJava = 'APPLICATION_JAVA',
-  /** MimeType application/msword */
+  /** application/msword mime type. */
   ApplicationMsword = 'APPLICATION_MSWORD',
-  /** MimeType application/octet-stream */
+  /** application/octet-stream mime type. */
   ApplicationOctetStream = 'APPLICATION_OCTET_STREAM',
-  /** MimeType application/onenote */
+  /** application/onenote mime type. */
   ApplicationOnenote = 'APPLICATION_ONENOTE',
-  /** MimeType application/oxps */
+  /** application/oxps mime type. */
   ApplicationOxps = 'APPLICATION_OXPS',
-  /** MimeType application/pdf */
+  /** application/pdf mime type. */
   ApplicationPdf = 'APPLICATION_PDF',
-  /** MimeType application/rar */
+  /** application/rar mime type. */
   ApplicationRar = 'APPLICATION_RAR',
-  /** MimeType application/rtf */
+  /** application/rtf mime type. */
   ApplicationRtf = 'APPLICATION_RTF',
-  /** MimeType application/ttaf+xml */
+  /** application/ttaf+xml mime type. */
   ApplicationTtafXml = 'APPLICATION_TTAF_XML',
-  /** MimeType application/vnd.apple.keynote */
+  /** application/vnd.apple.keynote mime type. */
   ApplicationVndAppleKeynote = 'APPLICATION_VND_APPLE_KEYNOTE',
-  /** MimeType application/vnd.apple.numbers */
+  /** application/vnd.apple.numbers mime type. */
   ApplicationVndAppleNumbers = 'APPLICATION_VND_APPLE_NUMBERS',
-  /** MimeType application/vnd.apple.pages */
+  /** application/vnd.apple.pages mime type. */
   ApplicationVndApplePages = 'APPLICATION_VND_APPLE_PAGES',
-  /** MimeType application/vnd.ms-access */
+  /** application/vnd.ms-access mime type. */
   ApplicationVndMsAccess = 'APPLICATION_VND_MS_ACCESS',
-  /** MimeType application/vnd.ms-excel */
+  /** application/vnd.ms-excel mime type. */
   ApplicationVndMsExcel = 'APPLICATION_VND_MS_EXCEL',
-  /** MimeType application/vnd.ms-excel.addin.macroEnabled.12 */
+  /** application/vnd.ms-excel.addin.macroEnabled.12 mime type. */
   ApplicationVndMsExcelAddinMacroenabled_12 = 'APPLICATION_VND_MS_EXCEL_ADDIN_MACROENABLED_12',
-  /** MimeType application/vnd.ms-excel.sheet.binary.macroEnabled.12 */
+  /** application/vnd.ms-excel.sheet.binary.macroEnabled.12 mime type. */
   ApplicationVndMsExcelSheetBinaryMacroenabled_12 = 'APPLICATION_VND_MS_EXCEL_SHEET_BINARY_MACROENABLED_12',
-  /** MimeType application/vnd.ms-excel.sheet.macroEnabled.12 */
+  /** application/vnd.ms-excel.sheet.macroEnabled.12 mime type. */
   ApplicationVndMsExcelSheetMacroenabled_12 = 'APPLICATION_VND_MS_EXCEL_SHEET_MACROENABLED_12',
-  /** MimeType application/vnd.ms-excel.template.macroEnabled.12 */
+  /** application/vnd.ms-excel.template.macroEnabled.12 mime type. */
   ApplicationVndMsExcelTemplateMacroenabled_12 = 'APPLICATION_VND_MS_EXCEL_TEMPLATE_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint */
+  /** application/vnd.ms-powerpoint mime type. */
   ApplicationVndMsPowerpoint = 'APPLICATION_VND_MS_POWERPOINT',
-  /** MimeType application/vnd.ms-powerpoint.addin.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.addin.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointAddinMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_ADDIN_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint.presentation.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.presentation.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointPresentationMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_PRESENTATION_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint.slideshow.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.slideshow.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointSlideshowMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_SLIDESHOW_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint.slide.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.slide.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointSlideMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_SLIDE_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint.template.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.template.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointTemplateMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_TEMPLATE_MACROENABLED_12',
-  /** MimeType application/vnd.ms-project */
+  /** application/vnd.ms-project mime type. */
   ApplicationVndMsProject = 'APPLICATION_VND_MS_PROJECT',
-  /** MimeType application/vnd.ms-word.document.macroEnabled.12 */
+  /** application/vnd.ms-word.document.macroEnabled.12 mime type. */
   ApplicationVndMsWordDocumentMacroenabled_12 = 'APPLICATION_VND_MS_WORD_DOCUMENT_MACROENABLED_12',
-  /** MimeType application/vnd.ms-word.template.macroEnabled.12 */
+  /** application/vnd.ms-word.template.macroEnabled.12 mime type. */
   ApplicationVndMsWordTemplateMacroenabled_12 = 'APPLICATION_VND_MS_WORD_TEMPLATE_MACROENABLED_12',
-  /** MimeType application/vnd.ms-write */
+  /** application/vnd.ms-write mime type. */
   ApplicationVndMsWrite = 'APPLICATION_VND_MS_WRITE',
-  /** MimeType application/vnd.ms-xpsdocument */
+  /** application/vnd.ms-xpsdocument mime type. */
   ApplicationVndMsXpsdocument = 'APPLICATION_VND_MS_XPSDOCUMENT',
-  /** MimeType application/vnd.oasis.opendocument.chart */
+  /** application/vnd.oasis.opendocument.chart mime type. */
   ApplicationVndOasisOpendocumentChart = 'APPLICATION_VND_OASIS_OPENDOCUMENT_CHART',
-  /** MimeType application/vnd.oasis.opendocument.database */
+  /** application/vnd.oasis.opendocument.database mime type. */
   ApplicationVndOasisOpendocumentDatabase = 'APPLICATION_VND_OASIS_OPENDOCUMENT_DATABASE',
-  /** MimeType application/vnd.oasis.opendocument.formula */
+  /** application/vnd.oasis.opendocument.formula mime type. */
   ApplicationVndOasisOpendocumentFormula = 'APPLICATION_VND_OASIS_OPENDOCUMENT_FORMULA',
-  /** MimeType application/vnd.oasis.opendocument.graphics */
+  /** application/vnd.oasis.opendocument.graphics mime type. */
   ApplicationVndOasisOpendocumentGraphics = 'APPLICATION_VND_OASIS_OPENDOCUMENT_GRAPHICS',
-  /** MimeType application/vnd.oasis.opendocument.presentation */
+  /** application/vnd.oasis.opendocument.presentation mime type. */
   ApplicationVndOasisOpendocumentPresentation = 'APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION',
-  /** MimeType application/vnd.oasis.opendocument.spreadsheet */
+  /** application/vnd.oasis.opendocument.spreadsheet mime type. */
   ApplicationVndOasisOpendocumentSpreadsheet = 'APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET',
-  /** MimeType application/vnd.oasis.opendocument.text */
+  /** application/vnd.oasis.opendocument.text mime type. */
   ApplicationVndOasisOpendocumentText = 'APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT',
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.presentation */
+  /** application/vnd.openxmlformats-officedocument.presentationml.presentation mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentPresentationmlPresentation = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION',
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.slide */
+  /** application/vnd.openxmlformats-officedocument.presentationml.slide mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentPresentationmlSlide = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDE',
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.slideshow */
+  /** application/vnd.openxmlformats-officedocument.presentationml.slideshow mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentPresentationmlSlideshow = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDESHOW',
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.template */
+  /** application/vnd.openxmlformats-officedocument.presentationml.template mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentPresentationmlTemplate = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_TEMPLATE',
-  /** MimeType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet */
+  /** application/vnd.openxmlformats-officedocument.spreadsheetml.sheet mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET',
-  /** MimeType application/vnd.openxmlformats-officedocument.spreadsheetml.template */
+  /** application/vnd.openxmlformats-officedocument.spreadsheetml.template mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlTemplate = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_TEMPLATE',
-  /** MimeType application/vnd.openxmlformats-officedocument.wordprocessingml.document */
+  /** application/vnd.openxmlformats-officedocument.wordprocessingml.document mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentWordprocessingmlDocument = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT',
-  /** MimeType application/vnd.openxmlformats-officedocument.wordprocessingml.template */
+  /** application/vnd.openxmlformats-officedocument.wordprocessingml.template mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentWordprocessingmlTemplate = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE',
-  /** MimeType application/wordperfect */
+  /** application/wordperfect mime type. */
   ApplicationWordperfect = 'APPLICATION_WORDPERFECT',
-  /** MimeType application/x-7z-compressed */
+  /** application/x-7z-compressed mime type. */
   ApplicationX_7ZCompressed = 'APPLICATION_X_7Z_COMPRESSED',
-  /** MimeType application/x-gzip */
+  /** application/x-gzip mime type. */
   ApplicationXGzip = 'APPLICATION_X_GZIP',
-  /** MimeType application/x-tar */
+  /** application/x-tar mime type. */
   ApplicationXTar = 'APPLICATION_X_TAR',
-  /** MimeType application/zip */
+  /** application/zip mime type. */
   ApplicationZip = 'APPLICATION_ZIP',
-  /** MimeType audio/aac */
+  /** audio/aac mime type. */
   AudioAac = 'AUDIO_AAC',
-  /** MimeType audio/flac */
+  /** audio/flac mime type. */
   AudioFlac = 'AUDIO_FLAC',
-  /** MimeType audio/midi */
+  /** audio/midi mime type. */
   AudioMidi = 'AUDIO_MIDI',
-  /** MimeType audio/mpeg */
+  /** audio/mpeg mime type. */
   AudioMpeg = 'AUDIO_MPEG',
-  /** MimeType audio/ogg */
+  /** audio/ogg mime type. */
   AudioOgg = 'AUDIO_OGG',
-  /** MimeType audio/wav */
+  /** audio/wav mime type. */
   AudioWav = 'AUDIO_WAV',
-  /** MimeType audio/x-matroska */
+  /** audio/x-matroska mime type. */
   AudioXMatroska = 'AUDIO_X_MATROSKA',
-  /** MimeType audio/x-ms-wax */
+  /** audio/x-ms-wax mime type. */
   AudioXMsWax = 'AUDIO_X_MS_WAX',
-  /** MimeType audio/x-ms-wma */
+  /** audio/x-ms-wma mime type. */
   AudioXMsWma = 'AUDIO_X_MS_WMA',
-  /** MimeType audio/x-realaudio */
+  /** audio/x-realaudio mime type. */
   AudioXRealaudio = 'AUDIO_X_REALAUDIO',
-  /** MimeType image/bmp */
+  /** image/avif mime type. */
+  ImageAvif = 'IMAGE_AVIF',
+  /** image/bmp mime type. */
   ImageBmp = 'IMAGE_BMP',
-  /** MimeType image/gif */
+  /** image/gif mime type. */
   ImageGif = 'IMAGE_GIF',
-  /** MimeType image/heic */
+  /** image/heic mime type. */
   ImageHeic = 'IMAGE_HEIC',
-  /** MimeType image/jpeg */
+  /** image/heic-sequence mime type. */
+  ImageHeicSequence = 'IMAGE_HEIC_SEQUENCE',
+  /** image/heif mime type. */
+  ImageHeif = 'IMAGE_HEIF',
+  /** image/heif-sequence mime type. */
+  ImageHeifSequence = 'IMAGE_HEIF_SEQUENCE',
+  /** image/jpeg mime type. */
   ImageJpeg = 'IMAGE_JPEG',
-  /** MimeType image/png */
+  /** image/png mime type. */
   ImagePng = 'IMAGE_PNG',
-  /** MimeType image/svg+xml */
+  /** image/svg+xml mime type. */
   ImageSvgXml = 'IMAGE_SVG_XML',
-  /** MimeType image/tiff */
+  /** image/tiff mime type. */
   ImageTiff = 'IMAGE_TIFF',
-  /** MimeType image/webp */
+  /** image/webp mime type. */
   ImageWebp = 'IMAGE_WEBP',
-  /** MimeType image/x-icon */
+  /** image/x-icon mime type. */
   ImageXIcon = 'IMAGE_X_ICON',
-  /** MimeType text/calendar */
+  /** text/calendar mime type. */
   TextCalendar = 'TEXT_CALENDAR',
-  /** MimeType text/css */
+  /** text/css mime type. */
   TextCss = 'TEXT_CSS',
-  /** MimeType text/csv */
+  /** text/csv mime type. */
   TextCsv = 'TEXT_CSV',
-  /** MimeType text/plain */
+  /** text/plain mime type. */
   TextPlain = 'TEXT_PLAIN',
-  /** MimeType text/richtext */
+  /** text/richtext mime type. */
   TextRichtext = 'TEXT_RICHTEXT',
-  /** MimeType text/tab-separated-values */
+  /** text/tab-separated-values mime type. */
   TextTabSeparatedValues = 'TEXT_TAB_SEPARATED_VALUES',
-  /** MimeType text/vtt */
+  /** text/vtt mime type. */
   TextVtt = 'TEXT_VTT',
-  /** MimeType video/3gpp */
+  /** video/3gpp mime type. */
   Video_3Gpp = 'VIDEO_3GPP',
-  /** MimeType video/3gpp2 */
+  /** video/3gpp2 mime type. */
   Video_3Gpp2 = 'VIDEO_3GPP2',
-  /** MimeType video/avi */
+  /** video/avi mime type. */
   VideoAvi = 'VIDEO_AVI',
-  /** MimeType video/divx */
+  /** video/divx mime type. */
   VideoDivx = 'VIDEO_DIVX',
-  /** MimeType video/mp4 */
+  /** video/mp4 mime type. */
   VideoMp4 = 'VIDEO_MP4',
-  /** MimeType video/mpeg */
+  /** video/mpeg mime type. */
   VideoMpeg = 'VIDEO_MPEG',
-  /** MimeType video/ogg */
+  /** video/ogg mime type. */
   VideoOgg = 'VIDEO_OGG',
-  /** MimeType video/quicktime */
+  /** video/quicktime mime type. */
   VideoQuicktime = 'VIDEO_QUICKTIME',
-  /** MimeType video/webm */
+  /** video/webm mime type. */
   VideoWebm = 'VIDEO_WEBM',
-  /** MimeType video/x-flv */
+  /** video/x-flv mime type. */
   VideoXFlv = 'VIDEO_X_FLV',
-  /** MimeType video/x-matroska */
+  /** video/x-matroska mime type. */
   VideoXMatroska = 'VIDEO_X_MATROSKA',
-  /** MimeType video/x-ms-asf */
+  /** video/x-ms-asf mime type. */
   VideoXMsAsf = 'VIDEO_X_MS_ASF',
-  /** MimeType video/x-ms-wm */
+  /** video/x-ms-wm mime type. */
   VideoXMsWm = 'VIDEO_X_MS_WM',
-  /** MimeType video/x-ms-wmv */
+  /** video/x-ms-wmv mime type. */
   VideoXMsWmv = 'VIDEO_X_MS_WMV',
-  /** MimeType video/x-ms-wmx */
+  /** video/x-ms-wmx mime type. */
   VideoXMsWmx = 'VIDEO_X_MS_WMX'
 }
 
@@ -5038,8 +5763,12 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the page object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the page object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
   /** Whether this page is set to the static front page. */
@@ -5077,6 +5806,8 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the page object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Page type and the page type */
   preview?: Maybe<PageToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -5384,7 +6115,7 @@ export type PageToRevisionConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -5756,6 +6487,127 @@ export type Page_Builder_Sections_Team = AcfFieldGroup & {
 
 export type Page_Builder_Sections_Team_TeamMembers = TeamMember;
 
+/** The patternCategory type */
+export type PatternCategory = DatabaseIdentifier & Node & TermNode & UniformResourceIdentifiable & {
+  __typename?: 'PatternCategory';
+  /** The number of objects connected to the object */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int']['output'];
+  /** The description of the object */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Connection between the TermNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
+  /** Connection between the TermNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /** The globally unique ID for the object */
+  id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean']['output'];
+  /** The link to the term */
+  link?: Maybe<Scalars['String']['output']>;
+  /** The human friendly name of the object. */
+  name?: Maybe<Scalars['String']['output']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  patternCategoryId?: Maybe<Scalars['Int']['output']>;
+  /** An alphanumeric identifier for the object unique to its type. */
+  slug?: Maybe<Scalars['String']['output']>;
+  /** Connection between the PatternCategory type and the Taxonomy type */
+  taxonomy?: Maybe<PatternCategoryToTaxonomyConnectionEdge>;
+  /** The name of the taxonomy that the object is associated with */
+  taxonomyName?: Maybe<Scalars['String']['output']>;
+  /** The ID of the term group that this term object belongs to */
+  termGroupId?: Maybe<Scalars['Int']['output']>;
+  /** The taxonomy ID that the object is associated with */
+  termTaxonomyId?: Maybe<Scalars['Int']['output']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The patternCategory type */
+export type PatternCategoryEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The patternCategory type */
+export type PatternCategoryEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** Connection to patternCategory Nodes */
+export type PatternCategoryConnection = {
+  /** A list of edges (relational context) between RootQuery and connected patternCategory Nodes */
+  edges: Array<PatternCategoryConnectionEdge>;
+  /** A list of connected patternCategory Nodes */
+  nodes: Array<PatternCategory>;
+  /** Information about pagination in a connection. */
+  pageInfo: PatternCategoryConnectionPageInfo;
+};
+
+/** Edge between a Node and a connected patternCategory */
+export type PatternCategoryConnectionEdge = {
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The connected patternCategory Node */
+  node: PatternCategory;
+};
+
+/** Page Info on the connected PatternCategoryConnectionEdge */
+export type PatternCategoryConnectionPageInfo = {
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum PatternCategoryIdType {
+  /** The Database ID for the node */
+  DatabaseId = 'DATABASE_ID',
+  /** The hashed Global ID */
+  Id = 'ID',
+  /** The name of the node */
+  Name = 'NAME',
+  /** Url friendly name of the node */
+  Slug = 'SLUG',
+  /** The URI for the node */
+  Uri = 'URI'
+}
+
+/** Connection between the PatternCategory type and the Taxonomy type */
+export type PatternCategoryToTaxonomyConnectionEdge = Edge & OneToOneConnection & TaxonomyConnectionEdge & {
+  __typename?: 'PatternCategoryToTaxonomyConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The node of the connection, without the edges */
+  node: Taxonomy;
+};
+
 /** An plugin object */
 export type Plugin = Node & {
   __typename?: 'Plugin';
@@ -5830,6 +6682,11 @@ export enum PluginStatusEnum {
 /** The post type */
 export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithAuthor & NodeWithComments & NodeWithContentEditor & NodeWithExcerpt & NodeWithFeaturedImage & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & NodeWithTrackbacks & Previewable & UniformResourceIdentifiable & {
   __typename?: 'Post';
+  /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<PostToPostConnection>;
   /** Connection between the NodeWithAuthor type and the User type */
   author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
   /** The database identifier of the author of the node */
@@ -5876,10 +6733,18 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the post object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the post object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -5898,6 +6763,13 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
   modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<PostToParentConnectionEdge>;
+  /** The password for the post object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Whether the pings are open or closed for this particular post. */
   pingStatus?: Maybe<Scalars['String']['output']>;
   /** URLs that have been pinged. */
@@ -5933,6 +6805,15 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   toPing?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The unique resource identifier path */
   uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The post type */
+export type PostAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -6086,10 +6967,16 @@ export type PostFormat = DatabaseIdentifier & Node & TermNode & UniformResourceI
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -6254,7 +7141,7 @@ export type PostFormatToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -6341,7 +7228,7 @@ export type PostFormatToPostConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -6656,6 +7543,57 @@ export type PostToCommentConnectionWhereArgs = {
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
+/** Connection between the Post type and the post type */
+export type PostToParentConnectionEdge = Edge & OneToOneConnection & PostConnectionEdge & {
+  __typename?: 'PostToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: Post;
+};
+
+/** Connection between the Post type and the post type */
+export type PostToPostConnection = Connection & PostConnection & {
+  __typename?: 'PostToPostConnection';
+  /** Edges for the PostToPostConnection connection */
+  edges: Array<PostToPostConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Post>;
+  /** Information about pagination in a connection. */
+  pageInfo: PostToPostConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type PostToPostConnectionEdge = Edge & PostConnectionEdge & {
+  __typename?: 'PostToPostConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: Post;
+};
+
+/** Page Info on the &quot;PostToPostConnection&quot; */
+export type PostToPostConnectionPageInfo = PageInfo & PostConnectionPageInfo & WpPageInfo & {
+  __typename?: 'PostToPostConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
 /** Connection between the Post type and the postFormat type */
 export type PostToPostFormatConnection = Connection & PostFormatConnection & {
   __typename?: 'PostToPostFormatConnection';
@@ -6811,7 +7749,7 @@ export type PostToRevisionConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -7006,10 +7944,18 @@ export type Question = ContentNode & DatabaseIdentifier & HierarchicalContentNod
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the question object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the question object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -7030,6 +7976,8 @@ export type Question = ContentNode & DatabaseIdentifier & HierarchicalContentNod
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the question object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Question type and the question type */
   preview?: Maybe<QuestionToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -7142,10 +8090,16 @@ export type QuestionCategory = DatabaseIdentifier & HierarchicalNode & Hierarchi
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -7368,7 +8322,7 @@ export type QuestionCategoryToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -7527,7 +8481,7 @@ export type QuestionCategoryToQuestionConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -7948,12 +8902,16 @@ export type RootMutation = {
   createCourse?: Maybe<CreateCoursePayload>;
   /** The createGraphqlDocument mutation */
   createGraphqlDocument?: Maybe<CreateGraphqlDocumentPayload>;
+  /** The createGraphqlDocumentGroup mutation */
+  createGraphqlDocumentGroup?: Maybe<CreateGraphqlDocumentGroupPayload>;
   /** The createInterview mutation */
   createInterview?: Maybe<CreateInterviewPayload>;
   /** The createMediaItem mutation */
   createMediaItem?: Maybe<CreateMediaItemPayload>;
   /** The createPage mutation */
   createPage?: Maybe<CreatePagePayload>;
+  /** The createPatternCategory mutation */
+  createPatternCategory?: Maybe<CreatePatternCategoryPayload>;
   /** The createPost mutation */
   createPost?: Maybe<CreatePostPayload>;
   /** The createPostFormat mutation */
@@ -7982,12 +8940,16 @@ export type RootMutation = {
   deleteCourse?: Maybe<DeleteCoursePayload>;
   /** The deleteGraphqlDocument mutation */
   deleteGraphqlDocument?: Maybe<DeleteGraphqlDocumentPayload>;
+  /** The deleteGraphqlDocumentGroup mutation */
+  deleteGraphqlDocumentGroup?: Maybe<DeleteGraphqlDocumentGroupPayload>;
   /** The deleteInterview mutation */
   deleteInterview?: Maybe<DeleteInterviewPayload>;
   /** The deleteMediaItem mutation */
   deleteMediaItem?: Maybe<DeleteMediaItemPayload>;
   /** The deletePage mutation */
   deletePage?: Maybe<DeletePagePayload>;
+  /** The deletePatternCategory mutation */
+  deletePatternCategory?: Maybe<DeletePatternCategoryPayload>;
   /** The deletePost mutation */
   deletePost?: Maybe<DeletePostPayload>;
   /** The deletePostFormat mutation */
@@ -8026,12 +8988,16 @@ export type RootMutation = {
   updateCourse?: Maybe<UpdateCoursePayload>;
   /** The updateGraphqlDocument mutation */
   updateGraphqlDocument?: Maybe<UpdateGraphqlDocumentPayload>;
+  /** The updateGraphqlDocumentGroup mutation */
+  updateGraphqlDocumentGroup?: Maybe<UpdateGraphqlDocumentGroupPayload>;
   /** The updateInterview mutation */
   updateInterview?: Maybe<UpdateInterviewPayload>;
   /** The updateMediaItem mutation */
   updateMediaItem?: Maybe<UpdateMediaItemPayload>;
   /** The updatePage mutation */
   updatePage?: Maybe<UpdatePagePayload>;
+  /** The updatePatternCategory mutation */
+  updatePatternCategory?: Maybe<UpdatePatternCategoryPayload>;
   /** The updatePost mutation */
   updatePost?: Maybe<UpdatePostPayload>;
   /** The updatePostFormat mutation */
@@ -8086,6 +9052,12 @@ export type RootMutationCreateGraphqlDocumentArgs = {
 
 
 /** The root mutation */
+export type RootMutationCreateGraphqlDocumentGroupArgs = {
+  input: CreateGraphqlDocumentGroupInput;
+};
+
+
+/** The root mutation */
 export type RootMutationCreateInterviewArgs = {
   input: CreateInterviewInput;
 };
@@ -8100,6 +9072,12 @@ export type RootMutationCreateMediaItemArgs = {
 /** The root mutation */
 export type RootMutationCreatePageArgs = {
   input: CreatePageInput;
+};
+
+
+/** The root mutation */
+export type RootMutationCreatePatternCategoryArgs = {
+  input: CreatePatternCategoryInput;
 };
 
 
@@ -8188,6 +9166,12 @@ export type RootMutationDeleteGraphqlDocumentArgs = {
 
 
 /** The root mutation */
+export type RootMutationDeleteGraphqlDocumentGroupArgs = {
+  input: DeleteGraphqlDocumentGroupInput;
+};
+
+
+/** The root mutation */
 export type RootMutationDeleteInterviewArgs = {
   input: DeleteInterviewInput;
 };
@@ -8202,6 +9186,12 @@ export type RootMutationDeleteMediaItemArgs = {
 /** The root mutation */
 export type RootMutationDeletePageArgs = {
   input: DeletePageInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeletePatternCategoryArgs = {
+  input: DeletePatternCategoryInput;
 };
 
 
@@ -8320,6 +9310,12 @@ export type RootMutationUpdateGraphqlDocumentArgs = {
 
 
 /** The root mutation */
+export type RootMutationUpdateGraphqlDocumentGroupArgs = {
+  input: UpdateGraphqlDocumentGroupInput;
+};
+
+
+/** The root mutation */
 export type RootMutationUpdateInterviewArgs = {
   input: UpdateInterviewInput;
 };
@@ -8334,6 +9330,12 @@ export type RootMutationUpdateMediaItemArgs = {
 /** The root mutation */
 export type RootMutationUpdatePageArgs = {
   input: UpdatePageInput;
+};
+
+
+/** The root mutation */
+export type RootMutationUpdatePatternCategoryArgs = {
+  input: UpdatePatternCategoryInput;
 };
 
 
@@ -8441,6 +9443,10 @@ export type RootQuery = {
    * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
    */
   graphqlDocumentBy?: Maybe<GraphqlDocument>;
+  /** A 0bject */
+  graphqlDocumentGroup?: Maybe<GraphqlDocumentGroup>;
+  /** Connection between the RootQuery type and the graphqlDocumentGroup type */
+  graphqlDocumentGroups?: Maybe<RootQueryToGraphqlDocumentGroupConnection>;
   /** Connection between the RootQuery type and the graphqlDocument type */
   graphqlDocuments?: Maybe<RootQueryToGraphqlDocumentConnection>;
   /** An object of the interview Type.  */
@@ -8482,6 +9488,10 @@ export type RootQuery = {
   pageBy?: Maybe<Page>;
   /** Connection between the RootQuery type and the page type */
   pages?: Maybe<RootQueryToPageConnection>;
+  /** Connection between the RootQuery type and the patternCategory type */
+  patternCategories?: Maybe<RootQueryToPatternCategoryConnection>;
+  /** A 0bject */
+  patternCategory?: Maybe<PatternCategory>;
   /** A WordPress plugin */
   plugin?: Maybe<Plugin>;
   /** Connection between the RootQuery type and the Plugin type */
@@ -8561,6 +9571,8 @@ export type RootQuery = {
   tests?: Maybe<RootQueryToTestConnection>;
   /** A Theme object */
   theme?: Maybe<Theme>;
+  /** Theme Settings | Settings options. */
+  themeSettingsOptions?: Maybe<ThemeSettingsOptions>;
   /** Connection between the RootQuery type and the Theme type */
   themes?: Maybe<RootQueryToThemeConnection>;
   /** Returns a user */
@@ -8708,6 +9720,23 @@ export type RootQueryGraphqlDocumentByArgs = {
 
 
 /** The root entry point into the Graph */
+export type RootQueryGraphqlDocumentGroupArgs = {
+  id: Scalars['ID']['input'];
+  idType?: InputMaybe<GraphqlDocumentGroupIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryGraphqlDocumentGroupsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootQueryToGraphqlDocumentGroupConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
 export type RootQueryGraphqlDocumentsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -8839,6 +9868,23 @@ export type RootQueryPagesArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToPageConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryPatternCategoriesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootQueryToPatternCategoryConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryPatternCategoryArgs = {
+  id: Scalars['ID']['input'];
+  idType?: InputMaybe<PatternCategoryIdType>;
 };
 
 
@@ -9454,7 +10500,7 @@ export type RootQueryToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -9558,7 +10604,7 @@ export type RootQueryToCourseConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -9695,7 +10741,7 @@ export type RootQueryToGraphqlDocumentConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -9713,6 +10759,85 @@ export type RootQueryToGraphqlDocumentConnectionWhereArgs = {
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
   title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Connection between the RootQuery type and the graphqlDocumentGroup type */
+export type RootQueryToGraphqlDocumentGroupConnection = Connection & GraphqlDocumentGroupConnection & {
+  __typename?: 'RootQueryToGraphqlDocumentGroupConnection';
+  /** Edges for the RootQueryToGraphqlDocumentGroupConnection connection */
+  edges: Array<RootQueryToGraphqlDocumentGroupConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<GraphqlDocumentGroup>;
+  /** Information about pagination in a connection. */
+  pageInfo: RootQueryToGraphqlDocumentGroupConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RootQueryToGraphqlDocumentGroupConnectionEdge = Edge & GraphqlDocumentGroupConnectionEdge & {
+  __typename?: 'RootQueryToGraphqlDocumentGroupConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: GraphqlDocumentGroup;
+};
+
+/** Page Info on the &quot;RootQueryToGraphqlDocumentGroupConnection&quot; */
+export type RootQueryToGraphqlDocumentGroupConnectionPageInfo = GraphqlDocumentGroupConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'RootQueryToGraphqlDocumentGroupConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the RootQueryToGraphqlDocumentGroupConnection connection */
+export type RootQueryToGraphqlDocumentGroupConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']['input']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']['input']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the RootQuery type and the interview type */
@@ -9766,7 +10891,7 @@ export type RootQueryToInterviewConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -9845,7 +10970,7 @@ export type RootQueryToMediaItemConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -10012,7 +11137,7 @@ export type RootQueryToPageConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -10030,6 +11155,85 @@ export type RootQueryToPageConnectionWhereArgs = {
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
   title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Connection between the RootQuery type and the patternCategory type */
+export type RootQueryToPatternCategoryConnection = Connection & PatternCategoryConnection & {
+  __typename?: 'RootQueryToPatternCategoryConnection';
+  /** Edges for the RootQueryToPatternCategoryConnection connection */
+  edges: Array<RootQueryToPatternCategoryConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<PatternCategory>;
+  /** Information about pagination in a connection. */
+  pageInfo: RootQueryToPatternCategoryConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RootQueryToPatternCategoryConnectionEdge = Edge & PatternCategoryConnectionEdge & {
+  __typename?: 'RootQueryToPatternCategoryConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: PatternCategory;
+};
+
+/** Page Info on the &quot;RootQueryToPatternCategoryConnection&quot; */
+export type RootQueryToPatternCategoryConnectionPageInfo = PageInfo & PatternCategoryConnectionPageInfo & WpPageInfo & {
+  __typename?: 'RootQueryToPatternCategoryConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the RootQueryToPatternCategoryConnection connection */
+export type RootQueryToPatternCategoryConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']['input']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']['input']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']['input']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the RootQuery type and the Plugin type */
@@ -10142,7 +11346,7 @@ export type RootQueryToPostConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -10371,7 +11575,7 @@ export type RootQueryToQuestionConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -10444,7 +11648,7 @@ export type RootQueryToRevisionsConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -10627,7 +11831,7 @@ export type RootQueryToTeamMemberConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -10779,7 +11983,7 @@ export type RootQueryToTestConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -10850,7 +12054,7 @@ export type RootQueryToTestimonialConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -10956,7 +12160,7 @@ export type RootQueryToUserConnectionWhereArgs = {
   nicenameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** An array of nicenames to exclude. Users matching one of these nicenames will not be included in results. */
   nicenameNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<UsersConnectionOrderbyInput>>>;
   /** An array of role names that users must match to be included in results. Note that this is an inclusive list: users must match *each* role. */
   role?: InputMaybe<UserRoleEnum>;
@@ -11002,6 +12206,14 @@ export type RootQueryToUserRoleConnectionPageInfo = PageInfo & UserRoleConnectio
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']['output']>;
 };
+
+/** The strategy to use when loading the script */
+export enum ScriptLoadingStrategyEnum {
+  /** Use the script `async` attribute */
+  Async = 'ASYNC',
+  /** Use the script `defer` attribute */
+  Defer = 'DEFER'
+}
 
 /** Input for the sendPasswordResetEmail mutation. */
 export type SendPasswordResetEmailInput = {
@@ -11079,10 +12291,16 @@ export type Tag = DatabaseIdentifier & MenuItemLinkable & Node & TermNode & Unif
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -11186,6 +12404,8 @@ export type Taxonomy = Node & {
   __typename?: 'Taxonomy';
   /** List of Content Types associated with the Taxonomy */
   connectedContentTypes?: Maybe<TaxonomyToContentTypeConnection>;
+  /** List of Term Nodes associated with the Taxonomy */
+  connectedTerms?: Maybe<TaxonomyToTermNodeConnection>;
   /** Description of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;description */
   description?: Maybe<Scalars['String']['output']>;
   /** The plural name of the post type within the GraphQL Schema. */
@@ -11204,7 +12424,7 @@ export type Taxonomy = Node & {
   name?: Maybe<Scalars['String']['output']>;
   /** Whether the taxonomy is publicly queryable */
   public?: Maybe<Scalars['Boolean']['output']>;
-  /** Name of content type to diplay in REST API &quot;wp/v2&quot; namespace. */
+  /** Name of content type to display in REST API &quot;wp/v2&quot; namespace. */
   restBase?: Maybe<Scalars['String']['output']>;
   /** The REST Controller class assigned to handling this content type. */
   restControllerClass?: Maybe<Scalars['String']['output']>;
@@ -11229,6 +12449,15 @@ export type Taxonomy = Node & {
 
 /** A taxonomy object */
 export type TaxonomyConnectedContentTypesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** A taxonomy object */
+export type TaxonomyConnectedTermsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -11271,6 +12500,10 @@ export enum TaxonomyEnum {
   Aliasname = 'ALIASNAME',
   /** Taxonomy enum category */
   Category = 'CATEGORY',
+  /** Taxonomy enum graphql_document_group */
+  Graphqldocumentgroup = 'GRAPHQLDOCUMENTGROUP',
+  /** Taxonomy enum wp_pattern_category */
+  Patterncategory = 'PATTERNCATEGORY',
   /** Taxonomy enum post_format */
   Postformat = 'POSTFORMAT',
   /** Taxonomy enum question_category */
@@ -11320,6 +12553,39 @@ export type TaxonomyToContentTypeConnectionPageInfo = ContentTypeConnectionPageI
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+/** Connection between the Taxonomy type and the TermNode type */
+export type TaxonomyToTermNodeConnection = Connection & TermNodeConnection & {
+  __typename?: 'TaxonomyToTermNodeConnection';
+  /** Edges for the TaxonomyToTermNodeConnection connection */
+  edges: Array<TaxonomyToTermNodeConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<TermNode>;
+  /** Information about pagination in a connection. */
+  pageInfo: TaxonomyToTermNodeConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type TaxonomyToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
+  __typename?: 'TaxonomyToTermNodeConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: TermNode;
+};
+
+/** Page Info on the &quot;TaxonomyToTermNodeConnection&quot; */
+export type TaxonomyToTermNodeConnectionPageInfo = PageInfo & TermNodeConnectionPageInfo & WpPageInfo & {
+  __typename?: 'TaxonomyToTermNodeConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
 /** The teamMember type */
 export type TeamMember = ContentNode & DatabaseIdentifier & HierarchicalContentNode & HierarchicalNode & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & {
   __typename?: 'TeamMember';
@@ -11357,10 +12623,18 @@ export type TeamMember = ContentNode & DatabaseIdentifier & HierarchicalContentN
   featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the team_member object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the team_member object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -11381,6 +12655,8 @@ export type TeamMember = ContentNode & DatabaseIdentifier & HierarchicalContentN
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the team_member object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the TeamMember type and the teamMember type */
   preview?: Maybe<TeamMemberToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -11528,10 +12804,16 @@ export type TermNode = {
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -11727,10 +13009,18 @@ export type Test = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the test object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the test object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -11751,6 +13041,8 @@ export type Test = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the test object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Test type and the test type */
   preview?: Maybe<TestToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -11919,10 +13211,18 @@ export type Testimonial = ContentNode & DatabaseIdentifier & HierarchicalContent
   featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the testimonial object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the testimonial object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -11943,6 +13243,8 @@ export type Testimonial = ContentNode & DatabaseIdentifier & HierarchicalContent
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the testimonial object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Testimonial type and the testimonial type */
   preview?: Maybe<TestimonialToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -12122,12 +13424,59 @@ export type ThemeConnectionPageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+/** Theme Settings | Settings options. */
+export type ThemeSettingsOptions = {
+  __typename?: 'ThemeSettingsOptions';
+  pageSlug?: Maybe<Scalars['String']['output']>;
+  pageTitle?: Maybe<Scalars['String']['output']>;
+  /** Added to the GraphQL Schema because the ACF Field Group &quot;Theme Settings&quot; was set to Show in GraphQL. */
+  themeSettings?: Maybe<ThemeSettingsOptions_Themesettings>;
+};
+
+/** Field Group */
+export type ThemeSettingsOptions_Themesettings = AcfFieldGroup & {
+  __typename?: 'ThemeSettingsOptions_Themesettings';
+  emailAddress?: Maybe<Scalars['String']['output']>;
+  facebook?: Maybe<Scalars['String']['output']>;
+  favicon?: Maybe<MediaItem>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  headerMenu?: Maybe<Array<Maybe<ThemeSettingsOptions_Themesettings_HeaderMenu>>>;
+  instagram?: Maybe<Scalars['String']['output']>;
+  linkedin?: Maybe<Scalars['String']['output']>;
+  phoneNumber?: Maybe<Scalars['String']['output']>;
+  twitter?: Maybe<Scalars['String']['output']>;
+};
+
+/** Field Group */
+export type ThemeSettingsOptions_Themesettings_HeaderMenu = AcfFieldGroup & {
+  __typename?: 'ThemeSettingsOptions_Themesettings_headerMenu';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  link?: Maybe<AcfLink>;
+  subMenu?: Maybe<Array<Maybe<ThemeSettingsOptions_Themesettings_HeaderMenu_SubMenu>>>;
+};
+
+/** Field Group */
+export type ThemeSettingsOptions_Themesettings_HeaderMenu_SubMenu = AcfFieldGroup & {
+  __typename?: 'ThemeSettingsOptions_Themesettings_headerMenu_subMenu';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  link?: Maybe<AcfLink>;
+};
+
 /** Any node that has a URI */
 export type UniformResourceIdentifiable = {
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the node is a Term */
   isTermNode: Scalars['Boolean']['output'];
   /** The unique resource identifier path */
@@ -12258,6 +13607,31 @@ export type UpdateCoursePayload = {
   course?: Maybe<Course>;
 };
 
+/** Input for the updateGraphqlDocumentGroup mutation. */
+export type UpdateGraphqlDocumentGroupInput = {
+  /** The slug that the graphql_document_group will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The description of the graphql_document_group object */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the graphqlDocumentGroup object to update */
+  id: Scalars['ID']['input'];
+  /** The name of the graphql_document_group object to mutate */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the updateGraphqlDocumentGroup mutation. */
+export type UpdateGraphqlDocumentGroupPayload = {
+  __typename?: 'UpdateGraphqlDocumentGroupPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The created graphql_document_group */
+  graphqlDocumentGroup?: Maybe<GraphqlDocumentGroup>;
+};
+
 /** Input for the updateGraphqlDocument mutation. */
 export type UpdateGraphqlDocumentInput = {
   /** Alias names for saved GraphQL query documents */
@@ -12274,6 +13648,8 @@ export type UpdateGraphqlDocumentInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   /** Allow, deny or default access grant for specific query */
   grant?: InputMaybe<Scalars['String']['input']>;
+  /** Set connections between the graphqlDocument and graphqlDocumentGroups */
+  graphqlDocumentGroups?: InputMaybe<GraphqlDocumentGraphqlDocumentGroupsInput>;
   /** The ID of the graphqlDocument object */
   id: Scalars['ID']['input'];
   /** Override the edit lock when another user is editing the post */
@@ -12420,6 +13796,31 @@ export type UpdatePagePayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   page?: Maybe<Page>;
+};
+
+/** Input for the updatePatternCategory mutation. */
+export type UpdatePatternCategoryInput = {
+  /** The slug that the wp_pattern_category will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The description of the wp_pattern_category object */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the patternCategory object to update */
+  id: Scalars['ID']['input'];
+  /** The name of the wp_pattern_category object to mutate */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the updatePatternCategory mutation. */
+export type UpdatePatternCategoryPayload = {
+  __typename?: 'UpdatePatternCategoryPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The created wp_pattern_category */
+  patternCategory?: Maybe<PatternCategory>;
 };
 
 /** Input for the updatePostFormat mutation. */
@@ -12821,8 +14222,14 @@ export type User = Commenter & DatabaseIdentifier & Node & UniformResourceIdenti
   firstName?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the user object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -12833,7 +14240,7 @@ export type User = Commenter & DatabaseIdentifier & Node & UniformResourceIdenti
   locale?: Maybe<Scalars['String']['output']>;
   /** Connection between the User type and the mediaItem type */
   mediaItems?: Maybe<UserToMediaItemConnection>;
-  /** Display name of the user. This is equivalent to the WP_User-&gt;dispaly_name property. */
+  /** Display name of the user. This is equivalent to the WP_User-&gt;display_name property. */
   name?: Maybe<Scalars['String']['output']>;
   /** The nicename for the user. This field is equivalent to WP_User-&gt;user_nicename */
   nicename?: Maybe<Scalars['String']['output']>;
@@ -13052,10 +14459,6 @@ export enum UserRoleEnum {
   Contributor = 'CONTRIBUTOR',
   /** User role with specific capabilities */
   Editor = 'EDITOR',
-  /** User role with specific capabilities */
-  SeoEditor = 'SEO_EDITOR',
-  /** User role with specific capabilities */
-  SeoManager = 'SEO_MANAGER',
   /** User role with specific capabilities */
   Subscriber = 'SUBSCRIBER'
 }
@@ -13280,7 +14683,7 @@ export type UserToMediaItemConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -13359,7 +14762,7 @@ export type UserToPageConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -13446,7 +14849,7 @@ export type UserToPostConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -13519,7 +14922,7 @@ export type UserToRevisionsConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']['input']>;
@@ -13651,6 +15054,20 @@ export type GetPageByUriQueryVariables = Exact<{
 
 export type GetPageByUriQuery = { __typename?: 'RootQuery', page?: { __typename?: 'Page', content?: string | null, id: string, slug?: string | null, title?: string | null, uri?: string | null, date?: string | null, modified?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, caption?: string | null, id: string, sizes?: string | null, sourceUrl?: string | null, srcSet?: string | null } } | null, builder?: { __typename?: 'Page_Builder', sections?: Array<{ __typename?: 'Page_Builder_Sections_Book', content?: string | null, fieldGroupName?: string | null, title?: string | null } | { __typename?: 'Page_Builder_Sections_Callout', bottomPadding?: string | null, fieldGroupName?: string | null, pretitle?: string | null, title?: string | null, topPadding?: string | null, button?: { __typename?: 'AcfLink', target?: string | null, title?: string | null, url?: string | null } | null } | { __typename?: 'Page_Builder_Sections_CalloutBig', topTitle?: string | null, topContent?: string | null, fieldGroupName?: string | null, bottomTitle?: string | null, bottomContent?: string | null, topButton?: { __typename?: 'AcfLink', url?: string | null, title?: string | null, target?: string | null } | null, features?: Array<{ __typename?: 'Page_Builder_Sections_CalloutBig_features', title?: string | null, subtitle?: string | null, icon?: { __typename?: 'MediaItem', sourceUrl?: string | null } | null } | null> | null, bottomImage?: { __typename?: 'MediaItem', sourceUrl?: string | null } | null, bottomButton?: { __typename?: 'AcfLink', target?: string | null, title?: string | null, url?: string | null } | null } | { __typename?: 'Page_Builder_Sections_CalloutContact', topPadding?: string | null, title?: string | null, pretitle?: string | null, fieldGroupName?: string | null, bottomPadding?: string | null } | { __typename?: 'Page_Builder_Sections_CalloutSimple', topPadding?: string | null, title?: string | null, fieldGroupName?: string | null, content?: string | null, bottomPadding?: string | null } | { __typename?: 'Page_Builder_Sections_Faqs', fieldGroupName?: string | null, faq?: Array<{ __typename?: 'Page_Builder_Sections_Faqs_faq', question?: string | null, answer?: string | null, categories?: Array<{ __typename?: 'Page_Builder_Sections_Faqs_faq_categories', category?: string | null } | null> | null } | null> | null } | { __typename?: 'Page_Builder_Sections_FeaturedBlock', topPadding?: string | null, title?: string | null, imageLeftSide?: boolean | null, fieldGroupName?: string | null, content?: string | null, bottomPadding?: string | null, image?: { __typename?: 'MediaItem', sourceUrl?: string | null } | null } | { __typename?: 'Page_Builder_Sections_Features', topPadding?: string | null, title?: string | null, fieldGroupName?: string | null, bottomPadding?: string | null, features?: Array<{ __typename?: 'Page_Builder_Sections_Features_features', title?: string | null, description?: string | null } | null> | null } | { __typename?: 'Page_Builder_Sections_FeaturesIcons', acfeFlexibleLayoutTitle?: string | null, bottomPadding?: string | null, content?: string | null, topPadding?: string | null, title?: string | null, fieldGroupName?: string | null, features?: Array<{ __typename?: 'Page_Builder_Sections_FeaturesIcons_features', title?: string | null, iconWidth?: string | null, iconHeight?: string | null, icon?: { __typename?: 'MediaItem', sourceUrl?: string | null } | null } | null> | null } | { __typename?: 'Page_Builder_Sections_FeaturesTabs', topPadding?: string | null, title?: string | null, fieldGroupName?: string | null, bottomPadding?: string | null, features?: Array<{ __typename?: 'Page_Builder_Sections_FeaturesTabs_features', title?: string | null, image?: { __typename?: 'MediaItem', sourceUrl?: string | null } | null } | null> | null } | { __typename?: 'Page_Builder_Sections_Hero', title?: string | null, fieldGroupName?: string | null, content?: string | null, features?: Array<{ __typename?: 'Page_Builder_Sections_Hero_features', feature?: string | null } | null> | null, button?: { __typename?: 'AcfLink', url?: string | null, title?: string | null, target?: string | null } | null, image?: { __typename?: 'MediaItem', sourceUrl?: string | null } | null } | { __typename?: 'Page_Builder_Sections_Interviews', topPadding?: string | null, fieldGroupName?: string | null, bottomPadding?: string | null, interviews?: Array<{ __typename?: 'Interview', id: string, excerpt?: string | null, slug?: string | null, title?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null } } | null } | null> | null } | { __typename?: 'Page_Builder_Sections_IntroBlock', topPadding?: string | null, title?: string | null, fieldGroupName?: string | null, content?: string | null, bottomPadding?: string | null } | { __typename?: 'Page_Builder_Sections_IntroSection', topPadding?: string | null, title?: string | null, fieldGroupName?: string | null, content?: string | null, bottomPadding?: string | null } | { __typename?: 'Page_Builder_Sections_PageIntro', title?: string | null, pretitle?: string | null, fieldGroupName?: string | null, content?: string | null, imageField?: { __typename?: 'MediaItem', sourceUrl?: string | null } | null } | { __typename?: 'Page_Builder_Sections_Pricing', topPadding?: string | null, title?: string | null, fieldGroupName?: string | null, bottomPadding?: string | null, features?: Array<{ __typename?: 'Page_Builder_Sections_Pricing_features', title?: string | null, description?: string | null } | null> | null } | { __typename?: 'Page_Builder_Sections_Services', title?: string | null, fieldGroupName?: string | null, content?: string | null, features?: Array<{ __typename?: 'Page_Builder_Sections_Services_features', feature?: string | null } | null> | null, links?: Array<{ __typename?: 'Page_Builder_Sections_Services_links', link?: { __typename?: 'AcfLink', url?: string | null, title?: string | null, target?: string | null } | null, features?: Array<{ __typename?: 'Page_Builder_Sections_Services_links_features', feature?: string | null } | null> | null } | null> | null } | { __typename?: 'Page_Builder_Sections_Team', topPadding?: string | null, title?: string | null, fieldGroupName?: string | null, featured?: boolean | null, content?: string | null, bottomPadding?: string | null, teamMembers?: Array<{ __typename?: 'TeamMember', id: string, title?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null } } | null, teamMemberSettings?: { __typename?: 'TeamMember_Teammembersettings', position?: string | null, linkedinProfile?: string | null, phoneNumber?: string | null, emailAddress?: string | null } | null } | null> | null } | null> | null } | null, children?: { __typename?: 'HierarchicalContentNodeToContentNodeChildrenConnection', nodes: Array<{ __typename?: 'Course', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'GraphqlDocument', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Interview', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'MediaItem', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Page', id: string, title?: string | null, slug?: string | null, uri?: string | null } | { __typename?: 'Post', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Question', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'TeamMember', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Test', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Testimonial', id: string, slug?: string | null, uri?: string | null }> } | null, parent?: { __typename?: 'HierarchicalContentNodeToParentContentNodeConnectionEdge', node: { __typename?: 'Course', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'GraphqlDocument', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Interview', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'MediaItem', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Page', title?: string | null, id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Post', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Question', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'TeamMember', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Test', id: string, slug?: string | null, uri?: string | null } | { __typename?: 'Testimonial', id: string, slug?: string | null, uri?: string | null } } | null } | null };
 
+export type PostBySlugQueryQueryVariables = Exact<{
+  slug: Scalars['ID']['input'];
+}>;
+
+
+export type PostBySlugQueryQuery = { __typename?: 'RootQuery', post?: { __typename?: 'Post', date?: string | null, modified?: string | null, slug?: string | null, title?: string | null, excerpt?: string | null, content?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', slug?: string | null, name?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null } } | null } | null };
+
+export type PostsPaginatedQueryQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type PostsPaginatedQueryQuery = { __typename?: 'RootQuery', posts?: { __typename?: 'RootQueryToPostConnection', pageInfo: { __typename?: 'RootQueryToPostConnectionPageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'Post', date?: string | null, modified?: string | null, slug?: string | null, title?: string | null, excerpt?: string | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', slug?: string | null, name?: string | null }> } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', sourceUrl?: string | null } } | null }> } | null };
+
 export type GetTestByUriQueryVariables = Exact<{
   uri: Scalars['ID']['input'];
 }>;
@@ -13658,7 +15075,15 @@ export type GetTestByUriQueryVariables = Exact<{
 
 export type GetTestByUriQuery = { __typename?: 'RootQuery', test?: { __typename?: 'Test', title?: string | null, testDetails?: { __typename?: 'Test_Testdetails', introductionScreen?: string | null, course?: { __typename?: 'Course', title?: string | null } | null, categories?: Array<{ __typename?: 'QuestionCategory', name?: string | null, questions?: { __typename?: 'QuestionCategoryToQuestionConnection', nodes: Array<{ __typename?: 'Question', id: string, questionDetails?: { __typename?: 'Question_Questiondetails', questionContent?: string | null, question?: string | null, questionType?: string | null, timeCap?: number | null, matches?: Array<{ __typename?: 'Question_Questiondetails_matches', leftSide?: string | null, rightSide?: string | null } | null> | null, answers?: Array<{ __typename?: 'Question_Questiondetails_answers', answer?: string | null, result?: boolean | null } | null> | null, course?: Array<{ __typename?: 'Course', title?: string | null } | null> | null } | null }> } | null } | null> | null } | null } | null };
 
+export type ThemeOptionsQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ThemeOptionsQueryQuery = { __typename?: 'RootQuery', themeSettingsOptions?: { __typename?: 'ThemeSettingsOptions', themeSettings?: { __typename?: 'ThemeSettingsOptions_Themesettings', phoneNumber?: string | null, emailAddress?: string | null, facebook?: string | null, twitter?: string | null, linkedin?: string | null, instagram?: string | null, favicon?: { __typename?: 'MediaItem', sourceUrl?: string | null } | null, headerMenu?: Array<{ __typename?: 'ThemeSettingsOptions_Themesettings_headerMenu', link?: { __typename?: 'AcfLink', target?: string | null, title?: string | null, url?: string | null } | null, subMenu?: Array<{ __typename?: 'ThemeSettingsOptions_Themesettings_headerMenu_subMenu', link?: { __typename?: 'AcfLink', target?: string | null, title?: string | null, url?: string | null } | null } | null> | null } | null> | null } | null } | null };
+
 export const PageFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"srcSet"}},{"kind":"Field","name":{"kind":"Name","value":"sizes"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<PageFieldsFragment, unknown>;
 export const GetAllPagesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllPages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"10000"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"hasPassword"},"value":{"kind":"BooleanValue","value":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PageFields"}},{"kind":"Field","name":{"kind":"Name","value":"isPostsPage"}},{"kind":"Field","name":{"kind":"Name","value":"isFrontPage"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"srcSet"}},{"kind":"Field","name":{"kind":"Name","value":"sizes"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllPagesQuery, GetAllPagesQueryVariables>;
 export const GetPageByUriDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPageByUri"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"page"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uri"}}},{"kind":"Argument","name":{"kind":"Name","value":"idType"},"value":{"kind":"EnumValue","value":"URI"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PageFields"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sizes"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"srcSet"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"builder"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_Book"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_Callout"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"pretitle"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"topPadding"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_CalloutBig"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topTitle"}},{"kind":"Field","name":{"kind":"Name","value":"topContent"}},{"kind":"Field","name":{"kind":"Name","value":"topButton"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"target"}}]}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"features"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"icon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}}]}},{"kind":"Field","name":{"kind":"Name","value":"bottomTitle"}},{"kind":"Field","name":{"kind":"Name","value":"bottomImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"bottomContent"}},{"kind":"Field","name":{"kind":"Name","value":"bottomButton"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_CalloutContact"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"pretitle"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_CalloutSimple"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_Faqs"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"faq"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"answer"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_FeaturedBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imageLeftSide"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_Features"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"features"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_FeaturesIcons"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"acfeFlexibleLayoutTitle"}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"features"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"icon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"iconWidth"}},{"kind":"Field","name":{"kind":"Name","value":"iconHeight"}}]}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_FeaturesTabs"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"features"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_Hero"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"features"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"feature"}}]}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"button"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"target"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_Interviews"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"interviews"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Interview"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_IntroBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_IntroSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_PageIntro"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"pretitle"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"imageField"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_Pricing"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}},{"kind":"Field","name":{"kind":"Name","value":"features"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_Services"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"features"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"feature"}}]}},{"kind":"Field","name":{"kind":"Name","value":"links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"target"}}]}},{"kind":"Field","name":{"kind":"Name","value":"features"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"feature"}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page_Builder_Sections_Team"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topPadding"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"fieldGroupName"}},{"kind":"Field","name":{"kind":"Name","value":"featured"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"bottomPadding"}},{"kind":"Field","name":{"kind":"Name","value":"teamMembers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TeamMember"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamMemberSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"linkedinProfile"}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"emailAddress"}}]}}]}}]}}]}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"caption"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"srcSet"}},{"kind":"Field","name":{"kind":"Name","value":"sizes"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetPageByUriQuery, GetPageByUriQueryVariables>;
+export const PostBySlugQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PostBySlugQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}},{"kind":"Argument","name":{"kind":"Name","value":"idType"},"value":{"kind":"EnumValue","value":"SLUG"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"format"},"value":{"kind":"EnumValue","value":"RENDERED"}}]},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"format"},"value":{"kind":"EnumValue","value":"RENDERED"}}]},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]}}]}}]}}]} as unknown as DocumentNode<PostBySlugQueryQuery, PostBySlugQueryQueryVariables>;
+export const PostsPaginatedQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PostsPaginatedQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"100"}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"hasPassword"},"value":{"kind":"BooleanValue","value":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}},{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"modified"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"format"},"value":{"kind":"EnumValue","value":"RENDERED"}}]},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<PostsPaginatedQueryQuery, PostsPaginatedQueryQueryVariables>;
 export const GetTestByUriDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTestByUri"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"test"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uri"}}},{"kind":"Argument","name":{"kind":"Name","value":"idType"},"value":{"kind":"EnumValue","value":"URI"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"testDetails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"introductionScreen"}},{"kind":"Field","name":{"kind":"Name","value":"course"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Course"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"questions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"questionDetails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"questionContent"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"questionType"}},{"kind":"Field","name":{"kind":"Name","value":"timeCap"}},{"kind":"Field","name":{"kind":"Name","value":"matches"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"leftSide"}},{"kind":"Field","name":{"kind":"Name","value":"rightSide"}}]}},{"kind":"Field","name":{"kind":"Name","value":"answers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"result"}}]}},{"kind":"Field","name":{"kind":"Name","value":"course"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Course"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetTestByUriQuery, GetTestByUriQueryVariables>;
+export const ThemeOptionsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ThemeOptionsQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"themeSettingsOptions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"themeSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"favicon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"phoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"emailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"facebook"}},{"kind":"Field","name":{"kind":"Name","value":"twitter"}},{"kind":"Field","name":{"kind":"Name","value":"linkedin"}},{"kind":"Field","name":{"kind":"Name","value":"instagram"}},{"kind":"Field","name":{"kind":"Name","value":"headerMenu"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"subMenu"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"link"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ThemeOptionsQueryQuery, ThemeOptionsQueryQueryVariables>;

@@ -10,6 +10,7 @@ type PageIntroProps = {
   image: {
     sourceUrl: string
   }
+  imageOverlay?: boolean
 }
 
 export default function PageIntro({
@@ -18,6 +19,7 @@ export default function PageIntro({
   content,
   image,
   smallerTitle = false,
+  imageOverlay = false,
 }: PageIntroProps) {
   return (
     <div
@@ -32,6 +34,7 @@ export default function PageIntro({
         alt="Background Image"
         className="object-cover object-center"
       />
+      {imageOverlay && <div className="absolute inset-0 bg-primary-600 opacity-60"></div>}
 
       <div className={cn('relative text-center text-white', pretitle && 'md:text-left')}>
         <div className="c-container">

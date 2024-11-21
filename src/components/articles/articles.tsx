@@ -6,99 +6,48 @@ import Link from 'next/link'
 
 import { ArrowRight, Search } from 'lucide-react'
 
+import { PostCard } from '@/lib/posts'
+
 import Select from '@/components/ui/select'
 
-const posts = [
-  {
-    title: 'Taking a Gap Year before Medical or Dental School',
-    slug: 'taking-a-gap-year-before-medical-or-dental-school',
-    category: 'UCAS Guides',
-    image: 'https://source.unsplash.com/random/600x400?doctor-dentist',
-    date: '2023-08-01',
-  },
-  {
-    title: 'How to Write a Personal Statement for Medicine',
-    slug: 'how-to-write-a-personal-statement-for-medicine',
-    category: 'UCAS Guides',
-    image: 'https://source.unsplash.com/random/600x400?medicine-statement',
-    date: '2022-12-01',
-  },
-  {
-    title: 'How to Write a Personal Statement for Dentistry',
-    slug: 'how-to-write-a-personal-statement-for-dentistry',
-    category: 'Comparison Tools',
-    image: 'https://source.unsplash.com/random/600x400?statement-dentistry',
-    date: '2022-11-01',
-  },
-  {
-    title: 'Navigating Medical School Applications: Your Comprehensive UCAS Guide',
-    slug: 'navigating-medical-school-applications-your-comprehensive-ucas-guide',
-    category: 'UCAS Guides',
-    image: 'https://source.unsplash.com/random/600x400?medical-school',
-    date: '2022-10-01',
-  },
-  {
-    title: 'From Aspiring Medic to Future Doctor: The Ultimate UCAS Medicine Handbook',
-    slug: 'from-aspiring-medic-to-future-doctor-the-ultimate-ucas-medicine-handbook',
-    category: 'UCAS Guides',
-    image: 'https://source.unsplash.com/random/600x400?medicine-handbook',
-    date: '2022-09-01',
-  },
-  {
-    title: 'The Path to Medical Success: Your Essential UCAS Guide to Medical School Admissions',
-    slug: 'the-path-to-medical-success-your-essential-ucas-guide-to-medical-school-admissions',
-    category: 'Topics',
-    image: 'https://source.unsplash.com/random/600x400?medical-school-admissions',
-    date: '2021-12-01',
-  },
-  {
-    title: 'Cracking Medical Admissions: The UCAS Blueprint for Aspiring Doctors',
-    slug: 'cracking-medical-admissions-the-ucas-blueprint-for-aspiring-doctors',
-    category: 'Topics',
-    image: 'https://source.unsplash.com/random/600x400?aspiring-doctors',
-    date: '2021-11-01',
-  },
-  {
-    title:
-      'Mastering Medicine Applications: A Comprehensive UCAS Guide for Future Healthcare Heroes',
-    slug: 'mastering-medicine-applications-a-comprehensive-ucas-guide-for-future-healthcare-heroes',
-    category: 'UCAS Guides',
-    image: 'https://source.unsplash.com/random/600x400?healthcare',
-    date: '2021-10-01',
-  },
-  {
-    title: 'Unlocking Medical School: Your UCAS Roadmap to a Successful Application',
-    slug: 'unlocking-medical-school-your-ucas-roadmap-to-a-successful-application',
-    category: 'UCAS Guides',
-    image: 'https://source.unsplash.com/random/600x400?medical-schools',
-    date: '2021-09-01',
-  },
-]
+const sortOptions = ['Sort by Newest', 'Sort by Oldest']
 
-const sortOptions = ['Sorty by Newest', 'Sort by Oldest']
-
-export default function Articles() {
-  const [activeCategory, activeCategorySet] = useState('All')
+export default function Articles({
+  posts,
+  selectedCategory,
+}: {
+  posts: PostCard[]
+  selectedCategory?: string
+}) {
+  const [activeCategory, activeCategorySet] = useState(selectedCategory ?? 'All')
   const [query, querySet] = useState('')
   const [filteredPosts, filteredPostsSet] = useState(posts)
-  const [activeSort, activeSortSet] = useState('Sorty by Newest')
-  const categories = Array.from(
-    new Set(posts.map((post) => post.category).sort((a, b) => a.localeCompare(b)))
-  )
+  const [activeSort, activeSortSet] = useState('Sort by Newest')
+  const postsCats = posts
+    .map((post) => post.categories?.nodes?.map((category) => category?.name))
+    .flat()
+    .filter(Boolean)
+    .map((cat) => cat ?? '')
+
+  const categories = Array.from(new Set(postsCats))
 
   useEffect(() => {
     filteredPostsSet(
       posts
-        .filter((post) => activeCategory === 'All' || post.category === activeCategory)
-        .filter((post) => post.title.toLowerCase().includes(query.toLowerCase()))
+        .filter(
+          (post) =>
+            activeCategory === 'All' ||
+            post?.categories?.nodes.some((cat) => cat?.name === activeCategory)
+        )
+        .filter((post) => post?.title?.toLowerCase().includes(query.toLowerCase()))
         .sort((a, b) => {
-          if (activeSort === 'Sorty by Newest') {
-            return new Date(b.date).getTime() - new Date(a.date).getTime()
+          if (activeSort === 'Sort by Newest') {
+            return new Date(b?.date ?? '').getTime() - new Date(a?.date ?? '').getTime()
           }
-          return new Date(a.date).getTime() - new Date(b.date).getTime()
+          return new Date(a?.date ?? '').getTime() - new Date(b?.date ?? '').getTime()
         })
     )
-  }, [activeCategory, query, activeSort])
+  }, [activeCategory, query, activeSort, posts])
 
   return (
     <div className="relative overflow-hidden bg-gray-100 pb-70 pt-20 lg:pt-40">
@@ -153,25 +102,32 @@ export default function Articles() {
           {filteredPosts.map((post) => (
             <div className="mb-20 w-full px-10 md:w-1/2 lg:w-1/3" key={post.slug}>
               <Link
-                href={`/resources/ucas-guides/${post.slug}`}
+                href={`/resources/${post.slug}`}
                 className="group relative flex h-full flex-col overflow-hidden rounded-15 bg-white shadow-md transition-all hover:ring-4 hover:ring-primary-200/50"
               >
-                <div className="relative h-210 overflow-hidden rounded-t-15">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="absolute inset-0 h-full w-full object-cover object-center"
-                  />
-                </div>
+                {post?.featuredImage?.node?.sourceUrl && (
+                  <div className="relative h-210 overflow-hidden rounded-t-15">
+                    <Image
+                      src={post?.featuredImage?.node?.sourceUrl}
+                      alt={post?.title ?? ''}
+                      fill
+                      className="absolute inset-0 h-full w-full object-cover object-center"
+                    />
+                  </div>
+                )}
                 <div className="flex grow flex-col px-22 pb-20 pt-22">
-                  <div
-                    className="text-12 leading-none"
-                    dangerouslySetInnerHTML={{ __html: post.category }}
-                  ></div>
+                  <div className="flex items-center space-x-4">
+                    {post?.categories?.nodes?.map((cat) => (
+                      <div
+                        key={cat.name}
+                        className="text-12 leading-none"
+                        dangerouslySetInnerHTML={{ __html: cat?.name ?? '' }}
+                      ></div>
+                    ))}
+                  </div>
                   <h3
                     className="mt-10 text-15 font-bold leading-tight md:text-16 lg:text-17 xl:text-18"
-                    dangerouslySetInnerHTML={{ __html: post.title }}
+                    dangerouslySetInnerHTML={{ __html: post?.title ?? '' }}
                   ></h3>
                   <div className="mt-auto pt-25 text-12">Read More</div>
                   <div className="absolute bottom-15 right-15 flex h-30 w-30 items-center justify-center overflow-hidden rounded-full bg-primary-100 text-primary-600">

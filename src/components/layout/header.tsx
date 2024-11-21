@@ -10,65 +10,11 @@ import { Squash as Hamburger } from 'hamburger-react'
 import { ChevronLeft, ChevronRight, Search, ShoppingBag, User } from 'lucide-react'
 import { useLockedBody } from 'usehooks-ts'
 
+import { ThemeOptionsProps } from '@/lib/theme-options'
+
 import LoginForm from '@/components/forms/login-form'
 
-const headerLinks = [
-  {
-    href: '/ucat',
-    label: 'UCAT',
-    sublinks: [],
-  },
-  {
-    href: '/msra',
-    label: 'MSRA',
-    sublinks: [],
-  },
-  {
-    href: '/interview',
-    label: 'Interview',
-    sublinks: [],
-  },
-  {
-    href: '/mmi',
-    label: 'MMI',
-    sublinks: [],
-  },
-  {
-    href: '/personal-statement',
-    label: 'Personal Statement',
-    sublinks: [],
-  },
-  {
-    href: '/residential-courses',
-    label: 'Residential Courses',
-    sublinks: [],
-  },
-  {
-    href: '/resources/ucas-guides',
-    label: 'Resources',
-    sublinks: [
-      {
-        href: '/resources/ucas-guides',
-        label: 'UCAS Guides',
-      },
-      {
-        href: '/resources/comparison-tools',
-        label: 'Comparison Tools',
-      },
-      {
-        href: '/resources/topics',
-        label: 'Topics',
-      },
-    ],
-  },
-  {
-    href: '/contact',
-    label: 'Contact',
-    sublinks: [],
-  },
-]
-
-export default function Header() {
+export default function Header({ menu }: { menu: ThemeOptionsProps['headerMenu'] }) {
   const [_locked, setLocked] = useLockedBody()
   const [showLogin, showLoginSet] = useState(false)
   const [headerHeight, setHeaderHeight] = useState<number | null>(null)
@@ -115,23 +61,26 @@ export default function Header() {
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {headerLinks.map(({ href, label, sublinks }) => (
-          <div className="relative border-t border-white/20 last-of-type:border-b" key={href}>
+        {menu?.map((item) => (
+          <div
+            className="relative border-t border-white/20 last-of-type:border-b"
+            key={item?.link?.title}
+          >
             <button
               className="block w-full appearance-none px-15 py-20 text-left text-22 leading-none md:py-20 md:text-25"
-              onClick={() => navigateAndClose(href)}
+              onClick={() => navigateAndClose(item?.link?.url ?? '/')}
             >
-              <span dangerouslySetInnerHTML={{ __html: label }}></span>
+              <span dangerouslySetInnerHTML={{ __html: item?.link?.title ?? '' }}></span>
             </button>
-            {sublinks.length > 0 && (
+            {item?.subMenu && item?.subMenu.length > 0 && (
               <button
                 className="absolute inset-y-0 right-0 flex w-60 items-center justify-center border-l border-white/20 text-white"
-                onClick={() => hoveredParentSet(label)}
+                onClick={() => hoveredParentSet(item?.link?.title ?? '')}
                 aria-label="Open sublinks"
               >
                 <span
                   className={`transition-all ${
-                    hoveredParent === label ? 'rotate-180' : 'rotate-0'
+                    hoveredParent === item?.link?.title ? 'rotate-180' : 'rotate-0'
                   }`}
                 >
                   <ChevronRight className="w-20" />
@@ -141,13 +90,14 @@ export default function Header() {
           </div>
         ))}
       </div>
-      {headerLinks.map(
-        ({ label: parentLabel, sublinks }) =>
-          sublinks.length > 0 && (
+      {menu?.map(
+        (item) =>
+          item?.subMenu &&
+          item?.subMenu.length > 0 && (
             <div
-              key={parentLabel}
+              key={item?.link?.title}
               className={`fixed inset-0 z-100 bg-primary-600 pb-30 pt-header-height text-white transition-all lg:hidden ${
-                hoveredParent === parentLabel ? 'translate-x-0' : 'translate-x-full'
+                hoveredParent === item?.link?.title ? 'translate-x-0' : 'translate-x-full'
               }`}
             >
               <div className="relative border-t border-white/20">
@@ -161,40 +111,41 @@ export default function Header() {
                   Back
                 </button>
               </div>
-              {sublinks.map((sublink) => (
+              {item?.subMenu.map((sublink) => (
                 <div
                   className="relative border-t border-white/20 last-of-type:border-b"
-                  key={sublink.href}
+                  key={sublink?.link?.url ?? ''}
                 >
                   <button
                     className="block w-full appearance-none px-15 py-20 text-left text-22 leading-none md:py-20 md:text-25"
-                    onClick={() => navigateAndClose(sublink.href)}
+                    onClick={() => navigateAndClose(sublink?.link?.url ?? '')}
                   >
-                    <span dangerouslySetInnerHTML={{ __html: sublink.label }}></span>
+                    <span dangerouslySetInnerHTML={{ __html: sublink?.link?.title ?? '' }}></span>
                   </button>
                 </div>
               ))}
             </div>
           )
       )}
-      {headerLinks.map(
-        ({ label: parentLabel, sublinks }) =>
-          sublinks.length > 0 && (
+      {menu?.map(
+        (item) =>
+          item?.subMenu &&
+          item?.subMenu.length > 0 && (
             <div
-              key={parentLabel}
+              key={item?.link?.title}
               onMouseEnter={() => hoveredParentSet(null)}
               className={`fixed inset-x-0 top-0 z-100 hidden bg-primary-400 p-20 text-white transition-all hover:translate-y-0 lg:block ${
-                hoveredParent === parentLabel ? 'translate-y-0' : '-translate-y-full'
+                hoveredParent === item?.link?.title ? 'translate-y-0' : '-translate-y-full'
               }`}
             >
               <div className="flex items-center justify-center pt-header-height">
-                {sublinks.map(({ href, label }) => (
+                {item?.subMenu?.map((sublink) => (
                   <Link
                     className="mx-15 text-12 font-bold uppercase transition-all hover:opacity-50 2lg:text-16 xl:mx-25"
-                    href={href}
-                    key={href}
+                    href={sublink?.link?.url ?? '/'}
+                    key={sublink?.link?.title}
                   >
-                    <span dangerouslySetInnerHTML={{ __html: label }}></span>
+                    <span dangerouslySetInnerHTML={{ __html: sublink?.link?.title ?? '' }}></span>
                   </Link>
                 ))}
               </div>
@@ -219,16 +170,16 @@ export default function Header() {
             </Link>
 
             <nav className="hidden lg:flex">
-              {headerLinks.map(({ href, label }) => (
+              {menu?.map((item) => (
                 <div
                   className="flex h-full items-center"
-                  key={href}
-                  onMouseEnter={() => hoveredParentSet(label)}
+                  key={item?.link?.title}
+                  onMouseEnter={() => hoveredParentSet(item?.link?.title ?? '')}
                 >
                   <Link
                     className="c-linkline ml-20 text-12 font-bold uppercase leading-loose text-white 2lg:text-14 xl:ml-25 2xl:ml-35"
-                    href={href}
-                    dangerouslySetInnerHTML={{ __html: label }}
+                    href={item?.link?.url ?? '/'}
+                    dangerouslySetInnerHTML={{ __html: item?.link?.title ?? '' }}
                   />
                 </div>
               ))}
@@ -262,7 +213,7 @@ export default function Header() {
         </div>
       </header>
       <div
-        className={`trasition-all fixed inset-0 z-150 ${
+        className={`fixed inset-0 z-150 transition-all ${
           showLogin ? 'visible opacity-100' : 'invisible opacity-0'
         }`}
       >
